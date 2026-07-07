@@ -282,6 +282,44 @@ function Home() {
         </div>
       </section>
 
+      {/* MATIÈRES — texture marquee */}
+      <section className="bg-ink py-24 md:py-32 overflow-hidden">
+        <div className="mx-auto max-w-7xl px-6 md:px-10 mb-14 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div>
+            <p className="eyebrow">05 · Échantillonnage</p>
+            <h2 className="reveal-up mt-4 text-4xl md:text-6xl text-cream max-w-xl">
+              La matière, <em>brute</em>.
+            </h2>
+          </div>
+          <p className="max-w-md text-sm leading-relaxed text-cream/60">
+            Dix fragments d'écorce et de cœur — la mémoire du bois avant qu'il ne devienne meuble.
+          </p>
+        </div>
+
+        <div className="relative">
+          <div className="flex marquee-track gap-6 w-max">
+            {[...textures, ...textures].map((t, i) => (
+              <figure key={i} className="relative w-[280px] md:w-[360px] h-[380px] md:h-[480px] shrink-0 overflow-hidden">
+                <img
+                  src={t.src}
+                  alt={t.label}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-[3000ms] hover:scale-110"
+                />
+                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink to-transparent p-5 text-cream">
+                  <p className="text-[0.6rem] uppercase tracking-[0.35em] text-bronze">{t.latin}</p>
+                  <p className="mt-1 font-serif text-xl">{t.label}</p>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-ink to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-ink to-transparent" />
+        </div>
+      </section>
+
+
+
       {/* PROCESS GALLERY — masonry */}
       <section id="atelier" className="py-28 md:py-40 bg-cream">
         <div className="mx-auto max-w-7xl px-6 md:px-10">

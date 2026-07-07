@@ -26,32 +26,36 @@ import hero from "@/assets/hero-hands.jpg";
 import oak from "@/assets/wood-oak.jpg";
 import walnut from "@/assets/wood-walnut.jpg";
 import cherry from "@/assets/wood-cherry.jpg";
-import bark from "@/assets/bark.jpg";
-import w1 from "@/assets/w1.jpg";
-import w2 from "@/assets/w2.jpg";
-import w3 from "@/assets/w3.jpg";
-import w4 from "@/assets/w4.jpg";
-import w5 from "@/assets/w5.jpg";
-import w6 from "@/assets/w6.jpg";
-import w7 from "@/assets/w7.jpg";
-import w8 from "@/assets/w8.jpg";
+
+// Real workshop photography (user-uploaded reference set)
+import barkRef from "@/assets/ref/c6427706.jpg.asset.json";
+import plankRef from "@/assets/ref/d732bccd.jpg.asset.json";
+import chiselHammer from "@/assets/ref/df4bc026.jpg.asset.json";
+import joinery from "@/assets/ref/990fc6f1.jpg.asset.json";
+import axeShavings from "@/assets/ref/581d3633.jpg.asset.json";
+import maulHands from "@/assets/ref/0e15b12b.jpg.asset.json";
+import ornament from "@/assets/ref/3195b0d2.jpg.asset.json";
+import patternCarve from "@/assets/ref/b9906c53.jpg.asset.json";
+import roseCarve from "@/assets/ref/529235b2.jpg.asset.json";
+import maitreAtelier from "@/assets/ref/af729c0c.jpg.asset.json";
 
 export const Route = createFileRoute("/")({ component: Home });
 
 const gallery = [
-  { src: w1, note: "Chêne Massif", h: "row-span-2" },
-  { src: w2, note: "Restauration d'Époque", h: "" },
-  { src: w3, note: "Outillage Ancestral", h: "" },
-  { src: w4, note: "Mobilier Sur-Mesure", h: "row-span-2" },
-  { src: w5, note: "Copeaux & Matière", h: "" },
-  { src: w6, note: "L'Atelier, Bourgogne", h: "row-span-2" },
-  { src: w7, note: "Assemblage à Queue d'Aronde", h: "" },
-  { src: w8, note: "Finition à la Cire", h: "" },
-  { src: w1, note: "Savoir-Faire Traditionnel", h: "" },
-  { src: w2, note: "Patrimoine Retrouvé", h: "" },
-  { src: w5, note: "Geste Précis", h: "row-span-2" },
-  { src: w3, note: "Fer & Bois", h: "" },
+  { src: chiselHammer.url,   note: "Ciseau & Maillet" },
+  { src: joinery.url,        note: "Assemblage Mi-Bois" },
+  { src: ornament.url,       note: "Ornement Sculpté" },
+  { src: patternCarve.url,   note: "Motif à la Gouge" },
+  { src: roseCarve.url,      note: "Rose en Bas-Relief" },
+  { src: maitreAtelier.url,  note: "Le Maître à l'Œuvre" },
+  { src: axeShavings.url,    note: "Copeaux Vivants" },
+  { src: maulHands.url,      note: "Main de l'Artisan" },
+  { src: plankRef.url,       note: "Plateau Patiné" },
+  { src: chiselHammer.url,   note: "Savoir-Faire Traditionnel" },
+  { src: joinery.url,        note: "Précision d'Ébéniste" },
+  { src: ornament.url,       note: "Patrimoine Sculpté" },
 ];
+
 
 const woods = {
   Chêne:    { img: oak,    latin: "Quercus robur",   note: "Fermeté honorée, veinage franc. Le bois des cathédrales et des grands mobiliers de famille." },
@@ -160,7 +164,7 @@ function Home() {
       {/* MANIFESTE — bark texture with glass card */}
       <section className="relative py-32 md:py-44">
         <div className="absolute inset-0">
-          <img src={bark} alt="" className="h-full w-full object-cover" loading="lazy" />
+          <img src={barkRef.url} alt="" className="h-full w-full object-cover" loading="lazy" />
           <div className="absolute inset-0 bg-black/50" />
         </div>
         <div className="relative mx-auto max-w-5xl px-6 md:px-10">

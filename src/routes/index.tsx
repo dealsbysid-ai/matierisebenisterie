@@ -164,7 +164,7 @@ function Home() {
       {/* MANIFESTE — bark texture with glass card */}
       <section className="relative py-32 md:py-44">
         <div className="absolute inset-0">
-          <img src={bark} alt="" className="h-full w-full object-cover" loading="lazy" />
+          <img src={barkRef.url} alt="" className="h-full w-full object-cover" loading="lazy" />
           <div className="absolute inset-0 bg-black/50" />
         </div>
         <div className="relative mx-auto max-w-5xl px-6 md:px-10">

@@ -287,8 +287,34 @@ function Home() {
       </section>
 
       {/* DEVIS CTA */}
-      <section id="devis" className="py-32 md:py-44 bg-cream">
-        <div className="mx-auto max-w-4xl px-6 md:px-10 text-center">
+      <section id="devis" className="relative overflow-hidden py-32 md:py-44 bg-cream">
+        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+          {Array.from({ length: 18 }).map((_, i) => {
+            const left = (i * 53) % 100;
+            const delay = (i * 1.37) % 14;
+            const dur = 14 + ((i * 3) % 12);
+            const scale = 0.6 + ((i * 7) % 10) / 10;
+            const rot = (i * 47) % 360;
+            const drift = ((i % 2 === 0 ? 1 : -1) * (30 + (i * 11) % 80));
+            const op = 0.18 + ((i * 5) % 20) / 100;
+            return (
+              <span
+                key={i}
+                className="shaving"
+                style={{
+                  left: `${left}%`,
+                  animationDelay: `-${delay}s`,
+                  animationDuration: `${dur}s`,
+                  transform: `scale(${scale})`,
+                  ["--r" as string]: `${rot}deg`,
+                  ["--x" as string]: `${drift}px`,
+                  ["--o" as string]: op,
+                }}
+              />
+            );
+          })}
+        </div>
+        <div className="relative mx-auto max-w-4xl px-6 md:px-10 text-center">
           <p className="eyebrow">Prendre contact</p>
           <h2 className="mt-6 text-4xl md:text-6xl">
             Chaque belle demeure mérite son <em className="italic">pièce d'exception</em>.

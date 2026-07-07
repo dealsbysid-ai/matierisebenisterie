@@ -39,6 +39,30 @@ import patternCarve from "@/assets/ref/b9906c53.jpg.asset.json";
 import roseCarve from "@/assets/ref/529235b2.jpg.asset.json";
 import maitreAtelier from "@/assets/ref/af729c0c.jpg.asset.json";
 
+import tex1  from "@/assets/tex/0e5d21c5.jpg.asset.json";
+import tex2  from "@/assets/tex/1a069f60.jpg.asset.json";
+import tex3  from "@/assets/tex/55e96eeb.jpg.asset.json";
+import tex4  from "@/assets/tex/6d598f71.jpg.asset.json";
+import tex5  from "@/assets/tex/89300f67.jpg.asset.json";
+import tex6  from "@/assets/tex/98e6269f.jpg.asset.json";
+import tex7  from "@/assets/tex/9d92f1c8.jpg.asset.json";
+import tex8  from "@/assets/tex/bab85f16.jpg.asset.json";
+import tex9  from "@/assets/tex/e1445138.jpg.asset.json";
+import tex10 from "@/assets/tex/e3670dcd.jpg.asset.json";
+
+const textures = [
+  { src: tex1.url,  label: "Chêne brûlé",     latin: "Fibre serrée" },
+  { src: tex2.url,  label: "Cœur de tronc",   latin: "Cernes centenaires" },
+  { src: tex3.url,  label: "Pin ancien",      latin: "Écorce brute" },
+  { src: tex4.url,  label: "Bois flotté",     latin: "Patine minérale" },
+  { src: tex5.url,  label: "Noyer veiné",     latin: "Grain profond" },
+  { src: tex6.url,  label: "Séquoia",         latin: "Corce rougeoyante" },
+  { src: tex7.url,  label: "Frêne rustique",  latin: "Nervures verticales" },
+  { src: tex8.url,  label: "Écorce vive",     latin: "Relief tectonique" },
+  { src: tex9.url,  label: "Pin sylvestre",   latin: "Lichen & silice" },
+  { src: tex10.url, label: "Chêne millénaire",latin: "Sillons du temps" },
+];
+
 export const Route = createFileRoute("/")({ component: Home });
 
 const gallery = [

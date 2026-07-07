@@ -39,6 +39,30 @@ import patternCarve from "@/assets/ref/b9906c53.jpg.asset.json";
 import roseCarve from "@/assets/ref/529235b2.jpg.asset.json";
 import maitreAtelier from "@/assets/ref/af729c0c.jpg.asset.json";
 
+import tex1  from "@/assets/tex/0e5d21c5.jpg.asset.json";
+import tex2  from "@/assets/tex/1a069f60.jpg.asset.json";
+import tex3  from "@/assets/tex/55e96eeb.jpg.asset.json";
+import tex4  from "@/assets/tex/6d598f71.jpg.asset.json";
+import tex5  from "@/assets/tex/89300f67.jpg.asset.json";
+import tex6  from "@/assets/tex/98e6269f.jpg.asset.json";
+import tex7  from "@/assets/tex/9d92f1c8.jpg.asset.json";
+import tex8  from "@/assets/tex/bab85f16.jpg.asset.json";
+import tex9  from "@/assets/tex/e1445138.jpg.asset.json";
+import tex10 from "@/assets/tex/e3670dcd.jpg.asset.json";
+
+const textures = [
+  { src: tex1.url,  label: "Chêne brûlé",     latin: "Fibre serrée" },
+  { src: tex2.url,  label: "Cœur de tronc",   latin: "Cernes centenaires" },
+  { src: tex3.url,  label: "Pin ancien",      latin: "Écorce brute" },
+  { src: tex4.url,  label: "Bois flotté",     latin: "Patine minérale" },
+  { src: tex5.url,  label: "Noyer veiné",     latin: "Grain profond" },
+  { src: tex6.url,  label: "Séquoia",         latin: "Corce rougeoyante" },
+  { src: tex7.url,  label: "Frêne rustique",  latin: "Nervures verticales" },
+  { src: tex8.url,  label: "Écorce vive",     latin: "Relief tectonique" },
+  { src: tex9.url,  label: "Pin sylvestre",   latin: "Lichen & silice" },
+  { src: tex10.url, label: "Chêne millénaire",latin: "Sillons du temps" },
+];
+
 export const Route = createFileRoute("/")({ component: Home });
 
 const gallery = [
@@ -257,6 +281,44 @@ function Home() {
           </div>
         </div>
       </section>
+
+      {/* MATIÈRES — texture marquee */}
+      <section className="bg-ink py-24 md:py-32 overflow-hidden">
+        <div className="mx-auto max-w-7xl px-6 md:px-10 mb-14 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div>
+            <p className="eyebrow">05 · Échantillonnage</p>
+            <h2 className="reveal-up mt-4 text-4xl md:text-6xl text-cream max-w-xl">
+              La matière, <em>brute</em>.
+            </h2>
+          </div>
+          <p className="max-w-md text-sm leading-relaxed text-cream/60">
+            Dix fragments d'écorce et de cœur — la mémoire du bois avant qu'il ne devienne meuble.
+          </p>
+        </div>
+
+        <div className="relative">
+          <div className="flex marquee-track gap-6 w-max">
+            {[...textures, ...textures].map((t, i) => (
+              <figure key={i} className="relative w-[280px] md:w-[360px] h-[380px] md:h-[480px] shrink-0 overflow-hidden">
+                <img
+                  src={t.src}
+                  alt={t.label}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-[3000ms] hover:scale-110"
+                />
+                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink to-transparent p-5 text-cream">
+                  <p className="text-[0.6rem] uppercase tracking-[0.35em] text-bronze">{t.latin}</p>
+                  <p className="mt-1 font-serif text-xl">{t.label}</p>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-ink to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-ink to-transparent" />
+        </div>
+      </section>
+
+
 
       {/* PROCESS GALLERY — masonry */}
       <section id="atelier" className="py-28 md:py-40 bg-cream">

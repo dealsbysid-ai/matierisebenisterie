@@ -34,6 +34,31 @@
   from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: translateY(0); }
 }
+@keyframes shaving-drift {
+  0%   { transform: translate3d(0, -10vh, 0) rotate(var(--r, 0deg)); opacity: 0; }
+  10%  { opacity: var(--o, 0.35); }
+  90%  { opacity: var(--o, 0.35); }
+  100% { transform: translate3d(var(--x, 40px), 110vh, 0) rotate(calc(var(--r, 0deg) + 360deg)); opacity: 0; }
+}
+
+.shaving {
+  position: absolute;
+  top: 0;
+  width: 22px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 30% 40%,
+    color-mix(in oklab, var(--bronze) 85%, white 15%) 0%,
+    color-mix(in oklab, var(--bronze) 60%, transparent) 55%,
+    transparent 75%);
+  filter: blur(0.3px);
+  animation: shaving-drift linear infinite;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .shaving { display: none; }
+}
 
 :root {
   --background: oklch(0.97 0.008 80);      /* warm cream */

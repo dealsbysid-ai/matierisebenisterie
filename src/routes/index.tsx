@@ -1,6 +1,27 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
+function useScrollReveal() {
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const targets = document.querySelectorAll<HTMLElement>(".reveal-up, .curtain");
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const el = e.target as HTMLElement;
+          if (el.classList.contains("curtain")) el.classList.add("is-revealed");
+          if (el.classList.contains("reveal-up")) el.classList.add("is-visible");
+          io.unobserve(el);
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -60px 0px" },
+    );
+    targets.forEach((t) => io.observe(t));
+    return () => io.disconnect();
+  }, []);
+}
+
 import hero from "@/assets/hero-hands.jpg";
 import oak from "@/assets/wood-oak.jpg";
 import walnut from "@/assets/wood-walnut.jpg";

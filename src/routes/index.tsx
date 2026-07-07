@@ -1,6 +1,27 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
+function useScrollReveal() {
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const targets = document.querySelectorAll<HTMLElement>(".reveal-up, .curtain");
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const el = e.target as HTMLElement;
+          if (el.classList.contains("curtain")) el.classList.add("is-revealed");
+          if (el.classList.contains("reveal-up")) el.classList.add("is-visible");
+          io.unobserve(el);
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -60px 0px" },
+    );
+    targets.forEach((t) => io.observe(t));
+    return () => io.disconnect();
+  }, []);
+}
+
 import hero from "@/assets/hero-hands.jpg";
 import oak from "@/assets/wood-oak.jpg";
 import walnut from "@/assets/wood-walnut.jpg";
@@ -84,6 +105,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
 }
 
 function Home() {
+  useScrollReveal();
   const [scrolled, setScrolled] = useState(false);
   const [wood, setWood] = useState<keyof typeof woods>("Chêne");
 
@@ -160,7 +182,7 @@ function Home() {
           <div className="grid gap-16 md:grid-cols-2 md:gap-24">
             <div>
               <p className="eyebrow">01 · Mobilier</p>
-              <h2 className="mt-5 text-4xl md:text-5xl">Sur-Mesure d'Exception</h2>
+              <h2 className="reveal-up mt-5 text-4xl md:text-5xl">Sur-Mesure d'Exception</h2>
               <p className="mt-6 text-base leading-relaxed text-muted-foreground">
                 Bibliothèques, tables de salle à manger, lits à baldaquin, dressings intégrés :
                 chaque projet naît d'un dialogue avec le lieu. Nous concevons, dessinons et
@@ -173,7 +195,7 @@ function Home() {
             </div>
             <div id="restauration">
               <p className="eyebrow">02 · Restauration</p>
-              <h2 className="mt-5 text-4xl md:text-5xl">Patrimoine Retrouvé</h2>
+              <h2 className="reveal-up mt-5 text-4xl md:text-5xl">Patrimoine Retrouvé</h2>
               <p className="mt-6 text-base leading-relaxed text-muted-foreground">
                 Meubles de famille, commodes Louis XV, secrétaires Empire, boiseries de château.
                 Notre atelier redonne vie aux pièces d'histoire dans le strict respect des
@@ -196,7 +218,7 @@ function Home() {
         </div>
         <div className="relative mx-auto max-w-6xl px-6 md:px-10">
           <p className="eyebrow text-cream drop-shadow-md">03 · Les Matières</p>
-          <h2 className="mt-4 max-w-3xl text-4xl text-cream drop-shadow-md md:text-6xl">
+          <h2 className="reveal-up mt-4 max-w-3xl text-4xl text-cream drop-shadow-md md:text-6xl">
             Trois essences, trois <em>caractères</em>.
           </h2>
 
@@ -220,7 +242,7 @@ function Home() {
 
             <div className="glass-card rounded-sm p-8 md:p-12">
               <p className="eyebrow">{active.latin}</p>
-              <h3 className="mt-3 font-serif text-3xl md:text-4xl">{wood}</h3>
+              <h3 className="reveal-up mt-3 font-serif text-3xl md:text-4xl">{wood}</h3>
               <p className="mt-6 text-base leading-relaxed text-muted-foreground">{active.note}</p>
               <div className="mt-8 grid grid-cols-3 gap-4 border-t border-border pt-6 text-xs uppercase tracking-widest text-muted-foreground">
                 <div><div className="text-ink font-serif text-xl normal-case tracking-normal">FR</div>Origine</div>
@@ -238,7 +260,7 @@ function Home() {
           <div className="mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div>
               <p className="eyebrow">04 · L'Atelier</p>
-              <h2 className="mt-4 text-4xl md:text-6xl max-w-xl">Le geste, capturé.</h2>
+              <h2 className="reveal-up mt-4 text-4xl md:text-6xl max-w-xl">Le geste, capturé.</h2>
             </div>
             <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
               Fragments d'un quotidien fait de copeaux, de lumière rasante et de patience.
@@ -248,7 +270,7 @@ function Home() {
 
           <div className="columns-1 gap-4 sm:columns-2 lg:columns-3 xl:columns-4 [column-fill:_balance]">
             {gallery.map((g, i) => (
-              <figure key={i} className="group relative mb-4 overflow-hidden break-inside-avoid">
+              <figure key={i} className="curtain group relative mb-4 break-inside-avoid">
                 <img
                   src={g.src}
                   alt={g.note}
@@ -316,7 +338,7 @@ function Home() {
         </div>
         <div className="relative mx-auto max-w-4xl px-6 md:px-10 text-center">
           <p className="eyebrow">Prendre contact</p>
-          <h2 className="mt-6 text-4xl md:text-6xl">
+          <h2 className="reveal-up mt-6 text-4xl md:text-6xl">
             Chaque belle demeure mérite son <em className="italic">pièce d'exception</em>.
           </h2>
           <p className="mt-8 mx-auto max-w-xl text-base text-muted-foreground leading-relaxed">

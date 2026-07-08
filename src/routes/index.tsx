@@ -1,5 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
 
 function useScrollReveal() {
   useEffect(() => {
@@ -135,6 +138,7 @@ function Home() {
   useScrollReveal();
   const [scrolled, setScrolled] = useState(false);
   const [wood, setWood] = useState<keyof typeof woods>("Chêne");
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -142,7 +146,20 @@ function Home() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightboxIndex(null);
+      if (e.key === "ArrowRight") setLightboxIndex((i) => ((i ?? 0) + 1) % gallery.length);
+      if (e.key === "ArrowLeft") setLightboxIndex((i) => ((i ?? 0) - 1 + gallery.length) % gallery.length);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [lightboxIndex]);
+
   const active = woods[wood];
+  const activeImage = lightboxIndex !== null ? gallery[lightboxIndex] : null;
+
 
   return (
     <div id="top" className="min-h-screen bg-background text-foreground">
@@ -335,7 +352,11 @@ function Home() {
 
           <div className="columns-1 gap-4 sm:columns-2 lg:columns-3 xl:columns-4 [column-fill:_balance]">
             {gallery.map((g, i) => (
-              <figure key={i} className="curtain group relative mb-4 break-inside-avoid">
+              <figure
+                key={i}
+                className="curtain group relative mb-4 break-inside-avoid cursor-pointer"
+                onClick={() => setLightboxIndex(i)}
+              >
                 <img
                   src={g.src}
                   alt={g.note}
@@ -349,6 +370,38 @@ function Home() {
               </figure>
             ))}
           </div>
+
+          <Dialog open={lightboxIndex !== null} onOpenChange={(open) => !open && setLightboxIndex(null)}>
+            <DialogContent className="max-w-[95vw] max-h-[95vh] w-full h-full p-0 border-none bg-black/95 flex items-center justify-center">
+              <DialogTitle className="sr-only">{activeImage?.note ?? "Image atelier"}</DialogTitle>
+              {activeImage && (
+                <div className="relative flex flex-col items-center w-full h-full justify-center p-4 md:p-8">
+                  <img
+                    src={activeImage.src}
+                    alt={activeImage.note}
+                    className="max-h-[85vh] max-w-full object-contain shadow-2xl"
+                  />
+                  <p className="mt-4 text-[0.65rem] uppercase tracking-[0.3em] text-cream/70">
+                    {activeImage.note}
+                  </p>
+                  <button
+                    onClick={() => setLightboxIndex((i) => ((i ?? 0) - 1 + gallery.length) % gallery.length)}
+                    className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 text-cream/60 hover:text-cream transition-colors p-2"
+                    aria-label="Image précédente"
+                  >
+                    <ChevronLeft className="h-8 w-8 md:h-12 md:w-12" />
+                  </button>
+                  <button
+                    onClick={() => setLightboxIndex((i) => ((i ?? 0) + 1) % gallery.length)}
+                    className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 text-cream/60 hover:text-cream transition-colors p-2"
+                    aria-label="Image suivante"
+                  >
+                    <ChevronRight className="h-8 w-8 md:h-12 md:w-12" />
+                  </button>
+                </div>
+              )}
+            </DialogContent>
+          </Dialog>
         </div>
       </section>
 

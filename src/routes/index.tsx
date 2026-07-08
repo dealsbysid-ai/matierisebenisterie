@@ -559,14 +559,14 @@ function Home() {
             {gallery.map((g, i) => (
               <figure
                 key={i}
-                className="curtain group relative mb-4 break-inside-avoid cursor-pointer"
+                className={`curtain group relative mb-4 break-inside-avoid cursor-pointer overflow-hidden ${ratioClass[g.ratio] ?? "aspect-[3/4]"}`}
                 onClick={() => setLightboxIndex(i)}
               >
                 <img
                   src={g.src}
                   alt={g.note}
                   loading="lazy"
-                  className="w-full transition-all duration-700 grayscale-[35%] contrast-95 group-hover:grayscale-0 group-hover:contrast-105 group-hover:scale-[1.02]"
+                  className="absolute inset-0 h-full w-full object-cover transition-all duration-700 grayscale-[20%] contrast-95 group-hover:grayscale-0 group-hover:contrast-105 group-hover:scale-[1.03]"
                 />
                 <figcaption className="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-ink/95 via-ink/70 to-transparent p-5 text-cream transition-transform duration-500 group-hover:translate-y-0">
                   <p className="text-[0.6rem] uppercase tracking-[0.35em] text-bronze">Note d'atelier</p>
@@ -575,6 +575,7 @@ function Home() {
               </figure>
             ))}
           </div>
+
 
           <Dialog open={lightboxIndex !== null} onOpenChange={(open) => !open && setLightboxIndex(null)}>
             <DialogContent className="max-w-[95vw] max-h-[95vh] w-full h-full p-0 border-none bg-black/95 flex items-center justify-center">

@@ -81,31 +81,28 @@
 .curtain.is-revealed::after { transform: translateX(101%); }
 .curtain.is-revealed > img { transform: scale(1); }
 
-/* Horizontal wood-grain streaks traveling left → right */
-@keyframes grain-sweep {
-  0%   { transform: translate3d(-40%, 0, 0); }
-  100% { transform: translate3d(140%, 0, 0); }
-}
+/* Scroll-driven grain line: starts at left edge, extends to right based on --line-p (0..1) */
 .grain-line {
   position: absolute;
   left: 0;
-  width: 40%;
+  width: calc(var(--line-p, 0) * 100%);
   border-radius: 999px;
   background: linear-gradient(
     90deg,
     transparent 0%,
-    color-mix(in oklab, var(--bronze) 55%, transparent) 30%,
-    color-mix(in oklab, var(--bronze) 90%, white 10%) 50%,
-    color-mix(in oklab, var(--bronze) 55%, transparent) 70%,
-    transparent 100%
+    color-mix(in oklab, var(--bronze) 40%, transparent) 8%,
+    color-mix(in oklab, var(--bronze) 90%, white 10%) 55%,
+    color-mix(in oklab, #fff 60%, var(--bronze)) 92%,
+    #fff 100%
   );
-  filter: blur(0.5px);
-  animation: grain-sweep linear infinite;
-  will-change: transform;
+  box-shadow: 0 0 8px color-mix(in oklab, var(--bronze) 70%, transparent);
+  filter: blur(0.4px);
+  transition: width 120ms linear;
+  will-change: width;
   pointer-events: none;
 }
 @media (prefers-reduced-motion: reduce) {
-  .grain-line { animation: none; opacity: 0.2 !important; }
+  .grain-line { width: 100%; transition: none; }
 }
 
 /* Scroll fade-up for headers */

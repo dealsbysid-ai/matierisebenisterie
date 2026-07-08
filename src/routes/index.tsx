@@ -29,7 +29,7 @@ import cherry from "@/assets/wood-cherry.jpg";
 
 // Real workshop photography (user-uploaded reference set)
 import barkRef from "@/assets/ref/c6427706.jpg.asset.json";
-import plankRef from "@/assets/ref/d732bccd.jpg.asset.json";
+
 import chiselHammer from "@/assets/ref/df4bc026.jpg.asset.json";
 import joinery from "@/assets/ref/990fc6f1.jpg.asset.json";
 import axeShavings from "@/assets/ref/581d3633.jpg.asset.json";
@@ -74,7 +74,6 @@ const gallery = [
   { src: maitreAtelier.url,  note: "Le Maître à l'Œuvre" },
   { src: axeShavings.url,    note: "Copeaux Vivants" },
   { src: maulHands.url,      note: "Main de l'Artisan" },
-  { src: plankRef.url,       note: "Plateau Patiné" },
   { src: chiselHammer.url,   note: "Savoir-Faire Traditionnel" },
   { src: joinery.url,        note: "Précision d'Ébéniste" },
   { src: ornament.url,       note: "Patrimoine Sculpté" },

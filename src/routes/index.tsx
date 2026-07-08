@@ -101,7 +101,7 @@ function DraggableMarquee({ items, speed = 40 }: { items: { src: string; label: 
 function useScrollReveal() {
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const targets = document.querySelectorAll<HTMLElement>(".reveal-up, .curtain");
+    const targets = document.querySelectorAll<HTMLElement>(".reveal-up, .curtain, .texture-wipe");
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -109,6 +109,7 @@ function useScrollReveal() {
           const el = e.target as HTMLElement;
           if (el.classList.contains("curtain")) el.classList.add("is-revealed");
           if (el.classList.contains("reveal-up")) el.classList.add("is-visible");
+          if (el.classList.contains("texture-wipe")) el.classList.add("is-visible");
           io.unobserve(el);
         });
       },

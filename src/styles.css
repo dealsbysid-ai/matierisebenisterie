@@ -81,17 +81,31 @@
 .curtain.is-revealed::after { transform: translateX(101%); }
 .curtain.is-revealed > img { transform: scale(1); }
 
-/* Horizontal texture wipe: hidden by clip-path until scrolled into view */
-.reveal-wipe {
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path 1.6s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: clip-path;
+/* Horizontal wood-grain streaks traveling left → right */
+@keyframes grain-sweep {
+  0%   { transform: translate3d(-40%, 0, 0); }
+  100% { transform: translate3d(140%, 0, 0); }
 }
-.reveal-wipe.is-wiped {
-  clip-path: inset(0 0 0 0);
+.grain-line {
+  position: absolute;
+  left: 0;
+  width: 40%;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in oklab, var(--bronze) 55%, transparent) 30%,
+    color-mix(in oklab, var(--bronze) 90%, white 10%) 50%,
+    color-mix(in oklab, var(--bronze) 55%, transparent) 70%,
+    transparent 100%
+  );
+  filter: blur(0.5px);
+  animation: grain-sweep linear infinite;
+  will-change: transform;
+  pointer-events: none;
 }
 @media (prefers-reduced-motion: reduce) {
-  .reveal-wipe { clip-path: none; transition: none; }
+  .grain-line { animation: none; opacity: 0.2 !important; }
 }
 
 /* Scroll fade-up for headers */

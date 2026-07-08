@@ -1,6 +1,62 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 
+function NumbersSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const wipeRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const wipe = wipeRef.current;
+    if (!section || !wipe) return;
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const rect = section.getBoundingClientRect();
+      const vh = window.innerHeight;
+      // progress: 0 when section top hits bottom of viewport, 1 when section bottom hits top
+      const total = rect.height + vh;
+      const p = Math.min(1, Math.max(0, (vh - rect.top) / total));
+      // Ease
+      const eased = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+      wipe.style.clipPath = `inset(0 ${(1 - eased) * 100}% 0 0)`;
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="relative py-28 md:py-36 overflow-hidden bg-ink">
+      <div className="absolute inset-0">
+        <div ref={wipeRef} className="absolute inset-0" style={{ clipPath: "inset(0 100% 0 0)", willChange: "clip-path" }}>
+          <img src={walnut} alt="" className="h-full w-full object-cover" loading="lazy" />
+          <div className="absolute inset-0 bg-ink/55" />
+        </div>
+      </div>
+      <div className="relative mx-auto max-w-6xl px-6 md:px-10 grid gap-12 md:grid-cols-4 text-cream">
+        {[
+          ["1978", "Année de fondation"],
+          ["3", "Générations d'ébénistes"],
+          ["+400", "Pièces restaurées"],
+          ["12", "Essences travaillées"],
+        ].map(([n, l], i) => (
+          <div key={l} className="reveal-up" style={{ transitionDelay: `${i * 120}ms` }}>
+            <div className="font-serif text-5xl md:text-6xl">{n}</div>
+            <div className="mt-3 text-[0.65rem] uppercase tracking-[0.3em] text-cream/60">{l}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function DraggableMarquee({ items, speed = 40 }: { items: { src: string; label: string; latin: string }[]; speed?: number }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const offsetRef = useRef(0);

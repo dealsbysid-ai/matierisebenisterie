@@ -1,7 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 function DraggableMarquee({ items, speed = 40 }: { items: { src: string; label: string; latin: string }[]; speed?: number }) {
   const trackRef = useRef<HTMLDivElement>(null);

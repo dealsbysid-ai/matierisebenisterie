@@ -3,23 +3,21 @@ import { useEffect, useRef, useState } from "react";
 
 function NumbersSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const linesRef = useRef<HTMLDivElement>(null);
+  
 
   useEffect(() => {
     const section = sectionRef.current;
-    const box = linesRef.current;
-    if (!section || !box) return;
+    if (!section) return;
     let raf = 0;
     const update = () => {
       raf = 0;
       const rect = section.getBoundingClientRect();
       const vh = window.innerHeight;
-      // 0 when section top hits bottom of viewport, 1 when section CENTER hits viewport center
       const centerDist = rect.top + rect.height / 2 - vh / 2;
       const range = vh / 2 + rect.height / 2;
       const p = Math.min(1, Math.max(0, 1 - centerDist / range));
       const eased = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
-      box.style.setProperty("--line-p", String(eased));
+      section.style.setProperty("--line-p", String(eased));
     };
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
     update();
@@ -32,41 +30,37 @@ function NumbersSection() {
     };
   }, []);
 
-  const lines = [
-    { top: "14%", h: 1, o: 0.55 },
-    { top: "27%", h: 2, o: 0.75 },
-    { top: "41%", h: 1, o: 0.5 },
-    { top: "55%", h: 3, o: 0.85 },
-    { top: "68%", h: 1, o: 0.55 },
-    { top: "82%", h: 2, o: 0.65 },
-  ];
-
   return (
-    <section ref={sectionRef} className="relative py-28 md:py-36 overflow-hidden bg-ink">
-      {/* Full wood texture background — always visible */}
-      <div aria-hidden className="absolute inset-0">
-        <img src={walnut} alt="" className="h-full w-full object-cover" loading="lazy" />
-        <div className="absolute inset-0 bg-ink/55" />
-      </div>
-      {/* Scroll-driven horizontal grain lines: grow left → right as section enters mid-viewport */}
+    <section
+      ref={sectionRef}
+      className="relative py-28 md:py-36 overflow-hidden"
+      style={{ backgroundColor: "oklch(0.32 0.06 45)" }}
+    >
+      {/* Wood texture reveals left → right, tied to scroll. Its own grain lines
+          act as the moving lines. Fully revealed when section hits mid-viewport. */}
       <div
-        ref={linesRef}
         aria-hidden
-        className="absolute inset-0 overflow-hidden"
-        style={{ ["--line-p" as string]: "0" }}
+        className="absolute inset-0"
+        style={{
+          clipPath: "inset(0 calc((1 - var(--line-p, 0)) * 100%) 0 0)",
+          willChange: "clip-path",
+        }}
       >
-        {lines.map((ln, i) => (
-          <span
-            key={i}
-            className="grain-line"
-            style={{
-              top: ln.top,
-              height: `${ln.h}px`,
-              opacity: ln.o,
-            }}
-          />
-        ))}
+        <img src={walnut} alt="" className="h-full w-full object-cover" loading="lazy" />
+        <div className="absolute inset-0 bg-ink/45" />
       </div>
+      {/* Bright edge that rides along with the reveal front */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 w-[2px]"
+        style={{
+          left: "calc(var(--line-p, 0) * 100%)",
+          background: "linear-gradient(to bottom, transparent, color-mix(in oklab, var(--bronze) 90%, white 20%), transparent)",
+          boxShadow: "0 0 24px color-mix(in oklab, var(--bronze) 80%, transparent)",
+          opacity: "calc(var(--line-p, 0) * (1 - var(--line-p, 0)) * 4)",
+        }}
+      />
+
       <div className="relative mx-auto max-w-6xl px-6 md:px-10 grid gap-12 md:grid-cols-4 text-cream">
 
         {[

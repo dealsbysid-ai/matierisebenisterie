@@ -153,6 +153,7 @@ import storyMalletChisel from "@/assets/story/mallet-chisel.jpg.asset.json";
 import storyCarvingDetail from "@/assets/story/carving-detail.jpg.asset.json";
 import storyPatternCarve from "@/assets/story/pattern-carve.jpg.asset.json";
 import storyRoseCarve from "@/assets/story/rose-carve.jpg.asset.json";
+import storyRoseCarve from "@/assets/story/rose-carve.jpg.asset.json";
 import storyJoinery from "@/assets/story/joinery.jpg.asset.json";
 import storyAxeShavings from "@/assets/story/axe-shavings.jpg.asset.json";
 import storyMalletHands from "@/assets/story/mallet-hands.jpg.asset.json";

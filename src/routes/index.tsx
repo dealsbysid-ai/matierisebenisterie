@@ -109,11 +109,15 @@ function Nav({ scrolled }: { scrolled: boolean }) {
     <>
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-          scrolled || open ? "bg-cream/90 backdrop-blur-md border-b border-border" : "bg-transparent"
+          open
+            ? "bg-transparent"
+            : scrolled
+              ? "bg-cream/90 backdrop-blur-md border-b border-border"
+              : "bg-transparent"
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
-          <a href="#top" className={`font-serif text-xl tracking-wide ${scrolled || open ? "text-ink" : "text-cream"}`}>
+          <a href="#top" className={`font-serif text-xl tracking-wide ${open ? "text-cream" : scrolled ? "text-ink" : "text-cream"}`}>
             Ébénisterie <span className="italic">Velut</span>
           </a>
           <nav className={`hidden gap-10 text-xs uppercase tracking-[0.25em] md:flex ${scrolled ? "text-ink" : "text-cream"}`}>
@@ -130,7 +134,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
           </a>
           <button
             onClick={() => setOpen(!open)}
-            className={`md:hidden relative z-50 text-xs uppercase tracking-widest transition-colors ${scrolled || open ? "text-ink" : "text-cream"}`}
+            className={`md:hidden relative z-50 text-xs uppercase tracking-widest transition-colors ${open ? "text-cream" : scrolled ? "text-ink" : "text-cream"}`}
             aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={open}
           >
@@ -141,27 +145,37 @@ function Nav({ scrolled }: { scrolled: boolean }) {
 
       {/* Premium mobile menu — rendered as sibling so it is not clipped by the header */}
       <div
-        className={`fixed inset-0 z-40 flex flex-col bg-cream transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden ${
-          open ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"
+        className={`fixed inset-0 z-40 flex flex-col bg-ink md:hidden transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          open ? "translate-x-0" : "translate-x-full"
         }`}
         aria-hidden={!open}
       >
+        {/* Animated top bronze line */}
+        <div
+          className={`h-[2px] bg-bronze transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            open ? "w-full" : "w-0"
+          }`}
+        />
+
         <div className="flex-1 overflow-auto px-8 pt-28 pb-12">
-          <nav className="flex flex-col gap-2">
+          <nav className="flex flex-col">
             {menuItems.map((item, i) => (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="group flex items-baseline gap-4 border-b border-border py-5 text-ink transition-colors"
-                style={{ transitionDelay: open ? `${i * 60}ms` : "0ms" }}
+                className={`group relative flex items-center justify-between border-b border-cream/10 py-6 text-cream transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                  open ? "translate-x-0 opacity-100" : "translate-x-8 opacity-0"
+                }`}
+                style={{ transitionDelay: open ? `${300 + i * 80}ms` : "0ms" }}
               >
-                <span className="text-[0.65rem] uppercase tracking-[0.3em] text-bronze opacity-60 w-8">
-                  {item.num}
-                </span>
-                <span className="font-serif text-4xl md:text-5xl group-hover:text-bronze transition-colors duration-300">
+                <span className="font-serif text-4xl group-hover:text-bronze transition-colors duration-300">
                   {item.label}
                 </span>
+                <span className="text-[0.65rem] uppercase tracking-[0.3em] text-bronze/60">
+                  {item.num}
+                </span>
+                <span className="absolute bottom-0 left-0 h-[1px] w-0 bg-bronze transition-all duration-500 group-hover:w-full" />
               </a>
             ))}
           </nav>
@@ -169,13 +183,21 @@ function Nav({ scrolled }: { scrolled: boolean }) {
           <a
             href="#devis"
             onClick={() => setOpen(false)}
-            className="mt-10 inline-flex items-center gap-3 border border-bronze bg-bronze px-8 py-4 text-[0.65rem] uppercase tracking-[0.3em] text-cream hover:bg-transparent hover:text-bronze transition-colors"
+            className={`mt-12 inline-flex items-center gap-3 border border-bronze bg-bronze px-8 py-4 text-[0.65rem] uppercase tracking-[0.3em] text-cream hover:bg-transparent hover:text-bronze transition-all duration-500 ${
+              open ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+            }`}
+            style={{ transitionDelay: open ? "620ms" : "0ms" }}
           >
             Demander un Devis
             <span aria-hidden>→</span>
           </a>
 
-          <div className="mt-16 text-xs uppercase tracking-[0.25em] text-muted-foreground">
+          <div
+            className={`mt-20 text-xs uppercase tracking-[0.25em] text-cream/50 transition-all duration-500 ${
+              open ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+            }`}
+            style={{ transitionDelay: open ? "720ms" : "0ms" }}
+          >
             <p>Atelier — 12 rue des Tanneurs, 21200 Beaune</p>
             <p className="mt-2">
               <a href="tel:+33380000000" className="hover:text-bronze transition-colors">+33 (0)3 80 00 00 00</a>
@@ -183,8 +205,13 @@ function Nav({ scrolled }: { scrolled: boolean }) {
           </div>
         </div>
 
-        <div className="px-8 py-6 border-t border-border">
-          <p className="text-[0.6rem] uppercase tracking-[0.35em] text-muted-foreground">
+        <div
+          className={`px-8 py-6 border-t border-cream/10 transition-all duration-500 ${
+            open ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+          }`}
+          style={{ transitionDelay: open ? "820ms" : "0ms" }}
+        >
+          <p className="text-[0.6rem] uppercase tracking-[0.35em] text-cream/40">
             Maison fondée en 1978 · Bourgogne
           </p>
         </div>

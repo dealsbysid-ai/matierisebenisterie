@@ -91,14 +91,28 @@ const woods = {
 
 function Nav({ scrolled }: { scrolled: boolean }) {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (open) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
+  const menuItems = [
+    { label: "Mobilier", href: "#mobilier", num: "01" },
+    { label: "Restauration", href: "#restauration", num: "02" },
+    { label: "L'Atelier", href: "#atelier", num: "03" },
+    { label: "Matières", href: "#matieres", num: "04" },
+  ];
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-cream/90 backdrop-blur-md border-b border-border" : "bg-transparent"
+        scrolled || open ? "bg-cream/90 backdrop-blur-md border-b border-border" : "bg-transparent"
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
-        <a href="#top" className={`font-serif text-xl tracking-wide ${scrolled ? "text-ink" : "text-cream"}`}>
+        <a href="#top" className={`font-serif text-xl tracking-wide ${scrolled || open ? "text-ink" : "text-cream"}`}>
           Ébénisterie <span className="italic">Velut</span>
         </a>
         <nav className={`hidden gap-10 text-xs uppercase tracking-[0.25em] md:flex ${scrolled ? "text-ink" : "text-cream"}`}>
@@ -115,21 +129,64 @@ function Nav({ scrolled }: { scrolled: boolean }) {
         </a>
         <button
           onClick={() => setOpen(!open)}
-          className={`md:hidden text-xs uppercase tracking-widest ${scrolled ? "text-ink" : "text-cream"}`}
-          aria-label="Menu"
+          className={`md:hidden relative z-50 text-xs uppercase tracking-widest transition-colors ${scrolled || open ? "text-ink" : "text-cream"}`}
+          aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+          aria-expanded={open}
         >
           {open ? "Fermer" : "Menu"}
         </button>
       </div>
-      {open && (
-        <div className="md:hidden bg-cream border-t border-border px-6 py-6 flex flex-col gap-5 text-sm uppercase tracking-[0.25em] text-ink">
-          <a href="#mobilier" onClick={() => setOpen(false)}>Mobilier</a>
-          <a href="#restauration" onClick={() => setOpen(false)}>Restauration</a>
-          <a href="#atelier" onClick={() => setOpen(false)}>L'Atelier</a>
-          <a href="#matieres" onClick={() => setOpen(false)}>Matières</a>
-          <a href="#devis" onClick={() => setOpen(false)} className="text-bronze">Demander un Devis →</a>
+
+      {/* Premium mobile menu */}
+      <div
+        className={`fixed inset-0 z-40 flex flex-col bg-cream transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden ${
+          open ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"
+        }`}
+        aria-hidden={!open}
+      >
+        <div className="flex-1 overflow-auto px-8 pt-28 pb-12">
+          <nav className="flex flex-col gap-2">
+            {menuItems.map((item, i) => (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className="group flex items-baseline gap-4 border-b border-border py-5 text-ink transition-colors"
+                style={{ transitionDelay: open ? `${i * 60}ms` : "0ms" }}
+              >
+                <span className="text-[0.65rem] uppercase tracking-[0.3em] text-bronze opacity-60 w-8">
+                  {item.num}
+                </span>
+                <span className="font-serif text-4xl md:text-5xl group-hover:text-bronze transition-colors duration-300">
+                  {item.label}
+                </span>
+              </a>
+            ))}
+          </nav>
+
+          <a
+            href="#devis"
+            onClick={() => setOpen(false)}
+            className="mt-10 inline-flex items-center gap-3 border border-bronze bg-bronze px-8 py-4 text-[0.65rem] uppercase tracking-[0.3em] text-cream hover:bg-transparent hover:text-bronze transition-colors"
+          >
+            Demander un Devis
+            <span aria-hidden>→</span>
+          </a>
+
+          <div className="mt-16 text-xs uppercase tracking-[0.25em] text-muted-foreground">
+            <p>Atelier — 12 rue des Tanneurs, 21200 Beaune</p>
+            <p className="mt-2">
+              <a href="tel:+33380000000" className="hover:text-bronze transition-colors">+33 (0)3 80 00 00 00</a>
+            </p>
+          </div>
         </div>
-      )}
+
+        <div className="px-8 py-6 border-t border-border">
+          <p className="text-[0.6rem] uppercase tracking-[0.35em] text-muted-foreground">
+            Maison fondée en 1978 · Bourgogne
+          </p>
+        </div>
+      </div>
     </header>
   );
 }

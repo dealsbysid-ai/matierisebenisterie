@@ -74,7 +74,6 @@ const gallery = [
   { src: maitreAtelier.url,  note: "Le Maître à l'Œuvre" },
   { src: axeShavings.url,    note: "Copeaux Vivants" },
   { src: maulHands.url,      note: "Main de l'Artisan" },
-  { src: plankRef.url,       note: "Plateau Patiné" },
   { src: chiselHammer.url,   note: "Savoir-Faire Traditionnel" },
   { src: joinery.url,        note: "Précision d'Ébéniste" },
   { src: ornament.url,       note: "Patrimoine Sculpté" },

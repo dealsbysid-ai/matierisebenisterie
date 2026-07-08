@@ -7,19 +7,17 @@ function NumbersSection() {
 
   useEffect(() => {
     const section = sectionRef.current;
-    const box = linesRef.current;
-    if (!section || !box) return;
+    if (!section) return;
     let raf = 0;
     const update = () => {
       raf = 0;
       const rect = section.getBoundingClientRect();
       const vh = window.innerHeight;
-      // 0 when section top hits bottom of viewport, 1 when section CENTER hits viewport center
       const centerDist = rect.top + rect.height / 2 - vh / 2;
       const range = vh / 2 + rect.height / 2;
       const p = Math.min(1, Math.max(0, 1 - centerDist / range));
       const eased = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
-      box.style.setProperty("--line-p", String(eased));
+      section.style.setProperty("--line-p", String(eased));
     };
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
     update();

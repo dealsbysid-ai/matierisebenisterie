@@ -81,6 +81,19 @@
 .curtain.is-revealed::after { transform: translateX(101%); }
 .curtain.is-revealed > img { transform: scale(1); }
 
+/* Horizontal texture wipe: hidden by clip-path until scrolled into view */
+.reveal-wipe {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: clip-path;
+}
+.reveal-wipe.is-wiped {
+  clip-path: inset(0 0 0 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal-wipe { clip-path: none; transition: none; }
+}
+
 /* Scroll fade-up for headers */
 .reveal-up {
   opacity: 0;

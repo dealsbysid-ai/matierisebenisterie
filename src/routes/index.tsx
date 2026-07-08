@@ -1,7 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 function DraggableMarquee({ items, speed = 40 }: { items: { src: string; label: string; latin: string }[]; speed?: number }) {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -164,60 +162,6 @@ const textures = [
 
 export const Route = createFileRoute("/")({ component: Home });
 
-import at01 from "@/assets/atelier/0e15b12b.jpg.asset.json";
-import at02 from "@/assets/atelier/0e5d21c5.jpg.asset.json";
-import at03 from "@/assets/atelier/1a069f60.jpg.asset.json";
-import at04 from "@/assets/atelier/3195b0d2.jpg.asset.json";
-import at05 from "@/assets/atelier/529235b2.jpg.asset.json";
-import at06 from "@/assets/atelier/55e96eeb.jpg.asset.json";
-import at07 from "@/assets/atelier/581d3633.jpg.asset.json";
-import at08 from "@/assets/atelier/6d598f71.jpg.asset.json";
-import at09 from "@/assets/atelier/89300f67.jpg.asset.json";
-import at10 from "@/assets/atelier/98e6269f.jpg.asset.json";
-import at11 from "@/assets/atelier/990fc6f1.jpg.asset.json";
-import at12 from "@/assets/atelier/9d92f1c8.jpg.asset.json";
-import at13 from "@/assets/atelier/af729c0c.jpg.asset.json";
-import at14 from "@/assets/atelier/b9906c53.jpg.asset.json";
-import at15 from "@/assets/atelier/bab85f16.jpg.asset.json";
-import at16 from "@/assets/atelier/c6427706.jpg.asset.json";
-import at17 from "@/assets/atelier/d732bccd.jpg.asset.json";
-import at18 from "@/assets/atelier/df4bc026.jpg.asset.json";
-import at19 from "@/assets/atelier/e1445138.jpg.asset.json";
-import at20 from "@/assets/atelier/e3670dcd.jpg.asset.json";
-import at21 from "@/assets/atelier/fe16956f.jpg.asset.json";
-
-// Aspect ratios chosen to crop each photo attractively inside the masonry column.
-// "tall" = 4/5, "portrait" = 3/4, "square" = 1/1, "wide" = 4/3
-const gallery = [
-  { src: at01.url, note: "Ciseau à l'ouvrage",       ratio: "portrait" },
-  { src: at18.url, note: "Maillet & Gouge",          ratio: "tall"     },
-  { src: at11.url, note: "Assemblage mi-bois",       ratio: "square"   },
-  { src: at13.url, note: "Le maître à l'établi",     ratio: "portrait" },
-  { src: at04.url, note: "Ornement sculpté",         ratio: "tall"     },
-  { src: at05.url, note: "Rose en bas-relief",       ratio: "square"   },
-  { src: at14.url, note: "Motif à la gouge",         ratio: "portrait" },
-  { src: at07.url, note: "Copeaux vivants",          ratio: "wide"     },
-  { src: at21.url, note: "Table achevée, chêne",     ratio: "tall"     },
-  { src: at17.url, note: "Détail de moulure",        ratio: "square"   },
-  { src: at03.url, note: "Chaise cannée, finition",  ratio: "portrait" },
-  { src: at12.url, note: "Poignée bronzée",          ratio: "square"   },
-  { src: at06.url, note: "Placage marqueté",         ratio: "portrait" },
-  { src: at19.url, note: "Commode restaurée",        ratio: "tall"     },
-  { src: at15.url, note: "Panneau assemblé",         ratio: "wide"     },
-  { src: at09.url, note: "Cire d'abeille appliquée", ratio: "square"   },
-  { src: at08.url, note: "Vernis à la mèche",        ratio: "portrait" },
-  { src: at02.url, note: "Coffret marqueté",         ratio: "tall"     },
-  { src: at10.url, note: "Tenon & mortaise",         ratio: "square"   },
-  { src: at20.url, note: "Buffet — pièce finale",    ratio: "portrait" },
-  { src: at16.url, note: "Signature de l'atelier",   ratio: "wide"     },
-];
-
-const ratioClass: Record<string, string> = {
-  tall:     "aspect-[4/5]",
-  portrait: "aspect-[3/4]",
-  square:   "aspect-square",
-  wide:     "aspect-[4/3]",
-};
 
 
 const woods = {
@@ -361,7 +305,6 @@ function Home() {
   useScrollReveal();
   const [scrolled, setScrolled] = useState(false);
   const [wood, setWood] = useState<keyof typeof woods>("Chêne");
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -369,19 +312,7 @@ function Home() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    if (lightboxIndex === null) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setLightboxIndex(null);
-      if (e.key === "ArrowRight") setLightboxIndex((i) => ((i ?? 0) + 1) % gallery.length);
-      if (e.key === "ArrowLeft") setLightboxIndex((i) => ((i ?? 0) - 1 + gallery.length) % gallery.length);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [lightboxIndex]);
-
   const active = woods[wood];
-  const activeImage = lightboxIndex !== null ? gallery[lightboxIndex] : null;
 
 
   return (
@@ -555,59 +486,6 @@ function Home() {
             </p>
           </div>
 
-          <div className="columns-1 gap-4 sm:columns-2 lg:columns-3 xl:columns-4 [column-fill:_balance]">
-            {gallery.map((g, i) => (
-              <figure
-                key={i}
-                className={`curtain group relative mb-4 break-inside-avoid cursor-pointer overflow-hidden ${ratioClass[g.ratio] ?? "aspect-[3/4]"}`}
-                onClick={() => setLightboxIndex(i)}
-              >
-                <img
-                  src={g.src}
-                  alt={g.note}
-                  loading="lazy"
-                  className="absolute inset-0 h-full w-full object-cover transition-all duration-700 grayscale-[20%] contrast-95 group-hover:grayscale-0 group-hover:contrast-105 group-hover:scale-[1.03]"
-                />
-                <figcaption className="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-ink/95 via-ink/70 to-transparent p-5 text-cream transition-transform duration-500 group-hover:translate-y-0">
-                  <p className="text-[0.6rem] uppercase tracking-[0.35em] text-bronze">Note d'atelier</p>
-                  <p className="mt-1 font-serif text-lg">{g.note}</p>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-
-
-          <Dialog open={lightboxIndex !== null} onOpenChange={(open) => !open && setLightboxIndex(null)}>
-            <DialogContent className="max-w-[95vw] max-h-[95vh] w-full h-full p-0 border-none bg-black/95 flex items-center justify-center">
-              <DialogTitle className="sr-only">{activeImage?.note ?? "Image atelier"}</DialogTitle>
-              {activeImage && (
-                <div className="relative flex flex-col items-center w-full h-full justify-center p-4 md:p-8">
-                  <img
-                    src={activeImage.src}
-                    alt={activeImage.note}
-                    className="max-h-[85vh] max-w-full object-contain shadow-2xl"
-                  />
-                  <p className="mt-4 text-[0.65rem] uppercase tracking-[0.3em] text-cream/70">
-                    {activeImage.note}
-                  </p>
-                  <button
-                    onClick={() => setLightboxIndex((i) => ((i ?? 0) - 1 + gallery.length) % gallery.length)}
-                    className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 text-cream/60 hover:text-cream transition-colors p-2"
-                    aria-label="Image précédente"
-                  >
-                    <ChevronLeft className="h-8 w-8 md:h-12 md:w-12" />
-                  </button>
-                  <button
-                    onClick={() => setLightboxIndex((i) => ((i ?? 0) + 1) % gallery.length)}
-                    className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 text-cream/60 hover:text-cream transition-colors p-2"
-                    aria-label="Image suivante"
-                  >
-                    <ChevronRight className="h-8 w-8 md:h-12 md:w-12" />
-                  </button>
-                </div>
-              )}
-            </DialogContent>
-          </Dialog>
         </div>
       </section>
 

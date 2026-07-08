@@ -1,7 +1,103 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+
+function DraggableMarquee({ items, speed = 40 }: { items: { src: string; label: string; latin: string }[]; speed?: number }) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const offsetRef = useRef(0);
+  const halfWidthRef = useRef(0);
+  const draggingRef = useRef(false);
+  const lastXRef = useRef(0);
+  const lastTsRef = useRef(0);
+  const rafRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const measure = () => { halfWidthRef.current = track.scrollWidth / 2; };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(track);
+
+    const apply = () => {
+      const hw = halfWidthRef.current || 1;
+      let x = offsetRef.current % hw;
+      if (x > 0) x -= hw;
+      track.style.transform = `translate3d(${x}px,0,0)`;
+    };
+
+    const tick = (ts: number) => {
+      const last = lastTsRef.current || ts;
+      const dt = (ts - last) / 1000;
+      lastTsRef.current = ts;
+      if (!draggingRef.current) {
+        offsetRef.current -= speed * dt;
+        apply();
+      }
+      rafRef.current = requestAnimationFrame(tick);
+    };
+    rafRef.current = requestAnimationFrame(tick);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      ro.disconnect();
+    };
+  }, [speed]);
+
+  const onPointerDown = (e: React.PointerEvent) => {
+    draggingRef.current = true;
+    lastXRef.current = e.clientX;
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+  };
+  const onPointerMove = (e: React.PointerEvent) => {
+    if (!draggingRef.current) return;
+    const dx = e.clientX - lastXRef.current;
+    lastXRef.current = e.clientX;
+    offsetRef.current += dx;
+    const track = trackRef.current;
+    if (track) {
+      const hw = halfWidthRef.current || 1;
+      let x = offsetRef.current % hw;
+      if (x > 0) x -= hw;
+      track.style.transform = `translate3d(${x}px,0,0)`;
+    }
+  };
+  const endDrag = (e: React.PointerEvent) => {
+    draggingRef.current = false;
+    try { (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId); } catch {}
+  };
+
+  return (
+    <div
+      className="relative touch-pan-y select-none cursor-grab active:cursor-grabbing"
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={endDrag}
+      onPointerCancel={endDrag}
+      onPointerLeave={endDrag}
+    >
+      <div ref={trackRef} className="flex gap-6 w-max will-change-transform">
+        {[...items, ...items].map((t, i) => (
+          <figure key={i} className="relative w-[280px] md:w-[360px] h-[380px] md:h-[480px] shrink-0 overflow-hidden pointer-events-none">
+            <img
+              src={t.src}
+              alt={t.label}
+              loading="lazy"
+              draggable={false}
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+            <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink to-transparent p-5 text-cream">
+              <p className="text-[0.6rem] uppercase tracking-[0.35em] text-bronze">{t.latin}</p>
+              <p className="mt-1 font-serif text-xl">{t.label}</p>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-ink to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-ink to-transparent" />
+    </div>
+  );
+}
 
 
 function useScrollReveal() {
@@ -398,26 +494,8 @@ function Home() {
           </p>
         </div>
 
-        <div className="relative">
-          <div className="flex marquee-track gap-6 w-max">
-            {[...textures, ...textures].map((t, i) => (
-              <figure key={i} className="relative w-[280px] md:w-[360px] h-[380px] md:h-[480px] shrink-0 overflow-hidden">
-                <img
-                  src={t.src}
-                  alt={t.label}
-                  loading="lazy"
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-[3000ms] hover:scale-110"
-                />
-                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink to-transparent p-5 text-cream">
-                  <p className="text-[0.6rem] uppercase tracking-[0.35em] text-bronze">{t.latin}</p>
-                  <p className="mt-1 font-serif text-xl">{t.label}</p>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-ink to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-ink to-transparent" />
-        </div>
+        <DraggableMarquee items={textures} />
+
       </section>
 
 

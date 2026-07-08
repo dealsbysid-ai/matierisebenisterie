@@ -592,6 +592,17 @@ function Home() {
 
       {/* DEVIS CTA */}
       <section id="devis" className="relative overflow-hidden py-32 md:py-44 bg-cream">
+        {/* Soft-focus workshop background */}
+        <div aria-hidden className="absolute inset-0">
+          <img
+            src={storyJoinery.url}
+            alt=""
+            className="h-full w-full object-cover scale-105"
+            style={{ filter: "blur(14px) saturate(0.85)" }}
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-cream/85" />
+        </div>
         <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
           {Array.from({ length: 18 }).map((_, i) => {
             const left = (i * 53) % 100;

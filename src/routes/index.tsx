@@ -2,18 +2,59 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 
 function NumbersSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const linesRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const box = linesRef.current;
+    if (!section || !box) return;
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const rect = section.getBoundingClientRect();
+      const vh = window.innerHeight;
+      // 0 when section top hits bottom of viewport, 1 when section CENTER hits viewport center
+      const centerDist = rect.top + rect.height / 2 - vh / 2;
+      const range = vh / 2 + rect.height / 2;
+      const p = Math.min(1, Math.max(0, 1 - centerDist / range));
+      const eased = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+      box.style.setProperty("--line-p", String(eased));
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
   const lines = [
-    { top: "14%", delay: "0s",   dur: "3.2s", h: 1, o: 0.55 },
-    { top: "27%", delay: "0.6s", dur: "3.8s", h: 2, o: 0.7 },
-    { top: "41%", delay: "1.1s", dur: "3.4s", h: 1, o: 0.45 },
-    { top: "55%", delay: "0.3s", dur: "4.2s", h: 3, o: 0.8 },
-    { top: "68%", delay: "1.5s", dur: "3.0s", h: 1, o: 0.5 },
-    { top: "82%", delay: "0.9s", dur: "3.6s", h: 2, o: 0.6 },
+    { top: "14%", h: 1, o: 0.55 },
+    { top: "27%", h: 2, o: 0.75 },
+    { top: "41%", h: 1, o: 0.5 },
+    { top: "55%", h: 3, o: 0.85 },
+    { top: "68%", h: 1, o: 0.55 },
+    { top: "82%", h: 2, o: 0.65 },
   ];
+
   return (
-    <section className="relative py-28 md:py-36 overflow-hidden bg-ink">
-      {/* Horizontal grain lines traveling left → right */}
-      <div aria-hidden className="absolute inset-0 overflow-hidden">
+    <section ref={sectionRef} className="relative py-28 md:py-36 overflow-hidden bg-ink">
+      {/* Full wood texture background — always visible */}
+      <div aria-hidden className="absolute inset-0">
+        <img src={walnut} alt="" className="h-full w-full object-cover" loading="lazy" />
+        <div className="absolute inset-0 bg-ink/55" />
+      </div>
+      {/* Scroll-driven horizontal grain lines: grow left → right as section enters mid-viewport */}
+      <div
+        ref={linesRef}
+        aria-hidden
+        className="absolute inset-0 overflow-hidden"
+        style={{ ["--line-p" as string]: "0" }}
+      >
         {lines.map((ln, i) => (
           <span
             key={i}
@@ -22,13 +63,12 @@ function NumbersSection() {
               top: ln.top,
               height: `${ln.h}px`,
               opacity: ln.o,
-              animationDelay: ln.delay,
-              animationDuration: ln.dur,
             }}
           />
         ))}
       </div>
       <div className="relative mx-auto max-w-6xl px-6 md:px-10 grid gap-12 md:grid-cols-4 text-cream">
+
         {[
           ["1978", "Année de fondation"],
           ["3", "Générations d'ébénistes"],

@@ -394,6 +394,45 @@ function Home() {
         </div>
       </section>
 
+      {/* À PROPOS — artisan portrait, fade-in on scroll */}
+      <section id="apropos" className="bg-cream py-28 md:py-40">
+        <div className="mx-auto max-w-7xl px-6 md:px-10">
+          <div className="grid gap-14 md:grid-cols-[1.05fr_1fr] md:gap-20 items-center">
+            <figure className="reveal-up relative overflow-hidden">
+              <img
+                src={artisanProfile.url}
+                alt="Antoine Velut, maître ébéniste, dans son atelier"
+                loading="lazy"
+                className="h-[520px] md:h-[680px] w-full object-cover"
+              />
+              <figcaption className="absolute bottom-5 left-5 bg-ink/70 px-4 py-2 text-[0.6rem] uppercase tracking-[0.3em] text-cream">
+                Antoine Velut · Atelier de Beaune
+              </figcaption>
+            </figure>
+            <div>
+              <p className="eyebrow">À propos</p>
+              <h2 className="reveal-up mt-5 text-4xl md:text-6xl leading-[1.05]">
+                Trois générations, <em className="italic text-bronze">une même main</em>.
+              </h2>
+              <p className="reveal-up mt-8 text-base md:text-lg leading-relaxed text-muted-foreground">
+                Antoine Velut a repris l'atelier familial en 2004, après quinze années passées
+                auprès des Compagnons du Devoir. Il perpétue un métier lent, silencieux,
+                exigeant — où la moindre entaille engage l'ensemble d'une pièce.
+              </p>
+              <p className="reveal-up mt-5 text-base md:text-lg leading-relaxed text-muted-foreground">
+                Ici, aucune machine numérique. Rien que le maillet, le ciseau, le rabot —
+                et l'œil patient qui décide quand le bois est enfin devenu meuble.
+              </p>
+              <div className="reveal-up mt-10 grid grid-cols-3 gap-6 border-t border-border pt-8 text-xs uppercase tracking-[0.25em] text-muted-foreground">
+                <div><div className="font-serif text-3xl normal-case tracking-normal text-ink">2004</div>Reprise</div>
+                <div><div className="font-serif text-3xl normal-case tracking-normal text-ink">15 ans</div>Compagnonnage</div>
+                <div><div className="font-serif text-3xl normal-case tracking-normal text-ink">Beaune</div>Bourgogne</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* MOBILIER + RESTAURATION services */}
       <section id="mobilier" className="py-28 md:py-40 bg-cream">
         <div className="mx-auto max-w-7xl px-6 md:px-10">

@@ -39,12 +39,10 @@ function NumbersSection() {
       {/* Wood texture reveals left → right, tied to scroll. Its own grain lines
           act as the moving lines. Fully revealed when section hits mid-viewport. */}
       <div
-        ref={linesRef}
         aria-hidden
         className="absolute inset-0"
         style={{
-          ["--line-p" as string]: "0",
-          clipPath: "inset(0 calc((1 - var(--line-p)) * 100%) 0 0)",
+          clipPath: "inset(0 calc((1 - var(--line-p, 0)) * 100%) 0 0)",
           willChange: "clip-path",
         }}
       >

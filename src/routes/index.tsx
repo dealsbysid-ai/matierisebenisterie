@@ -160,7 +160,6 @@ import storyMalletHands from "@/assets/story/mallet-hands.jpg.asset.json";
 const processShots = [
   { src: storyMalletChisel.url, label: "Ciseau & maillet", latin: "Gestes fondateurs", span: "md:row-span-2" },
   { src: storyCarvingDetail.url, label: "Rosace sculptée", latin: "Motif à la main", span: "" },
-  { src: storyRoseCarve.url, label: "Fleur en relief", latin: "Bas-relief végétal", span: "md:row-span-2" },
   { src: storyPatternCarve.url, label: "Damier sculpté", latin: "Trace du tracé", span: "" },
   { src: storyJoinery.url, label: "Assemblage à tenon", latin: "Précision millimétrique", span: "" },
   { src: storyAxeShavings.url, label: "Herminette", latin: "Copeaux vifs", span: "md:row-span-2" },

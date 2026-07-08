@@ -305,7 +305,6 @@ function Home() {
   useScrollReveal();
   const [scrolled, setScrolled] = useState(false);
   const [wood, setWood] = useState<keyof typeof woods>("Chêne");
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -313,19 +312,7 @@ function Home() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    if (lightboxIndex === null) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setLightboxIndex(null);
-      if (e.key === "ArrowRight") setLightboxIndex((i) => ((i ?? 0) + 1) % gallery.length);
-      if (e.key === "ArrowLeft") setLightboxIndex((i) => ((i ?? 0) - 1 + gallery.length) % gallery.length);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [lightboxIndex]);
-
   const active = woods[wood];
-  const activeImage = lightboxIndex !== null ? gallery[lightboxIndex] : null;
 
 
   return (

@@ -147,6 +147,26 @@ import tex8  from "@/assets/tex/bab85f16.jpg.asset.json";
 import tex9  from "@/assets/tex/e1445138.jpg.asset.json";
 import tex10 from "@/assets/tex/e3670dcd.jpg.asset.json";
 
+// Story photography — artisan portrait, macro details, workshop ambience
+import artisanProfile from "@/assets/story/artisan-profile.jpg.asset.json";
+import storyMalletChisel from "@/assets/story/mallet-chisel.jpg.asset.json";
+import storyCarvingDetail from "@/assets/story/carving-detail.jpg.asset.json";
+import storyPatternCarve from "@/assets/story/pattern-carve.jpg.asset.json";
+import storyRoseCarve from "@/assets/story/rose-carve.jpg.asset.json";
+import storyJoinery from "@/assets/story/joinery.jpg.asset.json";
+import storyAxeShavings from "@/assets/story/axe-shavings.jpg.asset.json";
+import storyMalletHands from "@/assets/story/mallet-hands.jpg.asset.json";
+
+const processShots = [
+  { src: storyMalletChisel.url, label: "Ciseau & maillet", latin: "Gestes fondateurs", span: "md:row-span-2" },
+  { src: storyCarvingDetail.url, label: "Rosace sculptée", latin: "Motif à la main", span: "" },
+  { src: storyRoseCarve.url, label: "Fleur en relief", latin: "Bas-relief végétal", span: "md:row-span-2" },
+  { src: storyPatternCarve.url, label: "Damier sculpté", latin: "Trace du tracé", span: "" },
+  { src: storyJoinery.url, label: "Assemblage à tenon", latin: "Précision millimétrique", span: "" },
+  { src: storyAxeShavings.url, label: "Herminette", latin: "Copeaux vifs", span: "md:row-span-2" },
+  { src: storyMalletHands.url, label: "Mains patinées", latin: "Trente ans de métier", span: "" },
+];
+
 const textures = [
   { src: tex1.url,  label: "Chêne brûlé",     latin: "Fibre serrée" },
   { src: tex2.url,  label: "Cœur de tronc",   latin: "Cernes centenaires" },

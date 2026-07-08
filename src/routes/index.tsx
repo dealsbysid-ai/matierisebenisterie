@@ -147,6 +147,26 @@ import tex8  from "@/assets/tex/bab85f16.jpg.asset.json";
 import tex9  from "@/assets/tex/e1445138.jpg.asset.json";
 import tex10 from "@/assets/tex/e3670dcd.jpg.asset.json";
 
+// Story photography — artisan portrait, macro details, workshop ambience
+import artisanProfile from "@/assets/story/artisan-profile.jpg.asset.json";
+import storyMalletChisel from "@/assets/story/mallet-chisel.jpg.asset.json";
+import storyCarvingDetail from "@/assets/story/carving-detail.jpg.asset.json";
+import storyPatternCarve from "@/assets/story/pattern-carve.jpg.asset.json";
+import storyRoseCarve from "@/assets/story/rose-carve.jpg.asset.json";
+import storyJoinery from "@/assets/story/joinery.jpg.asset.json";
+import storyAxeShavings from "@/assets/story/axe-shavings.jpg.asset.json";
+import storyMalletHands from "@/assets/story/mallet-hands.jpg.asset.json";
+
+const processShots = [
+  { src: storyMalletChisel.url, label: "Ciseau & maillet", latin: "Gestes fondateurs", span: "md:row-span-2" },
+  { src: storyCarvingDetail.url, label: "Rosace sculptée", latin: "Motif à la main", span: "" },
+  { src: storyRoseCarve.url, label: "Fleur en relief", latin: "Bas-relief végétal", span: "md:row-span-2" },
+  { src: storyPatternCarve.url, label: "Damier sculpté", latin: "Trace du tracé", span: "" },
+  { src: storyJoinery.url, label: "Assemblage à tenon", latin: "Précision millimétrique", span: "" },
+  { src: storyAxeShavings.url, label: "Herminette", latin: "Copeaux vifs", span: "md:row-span-2" },
+  { src: storyMalletHands.url, label: "Mains patinées", latin: "Trente ans de métier", span: "" },
+];
+
 const textures = [
   { src: tex1.url,  label: "Chêne brûlé",     latin: "Fibre serrée" },
   { src: tex2.url,  label: "Cœur de tronc",   latin: "Cernes centenaires" },
@@ -374,6 +394,45 @@ function Home() {
         </div>
       </section>
 
+      {/* À PROPOS — artisan portrait, fade-in on scroll */}
+      <section id="apropos" className="bg-cream py-28 md:py-40">
+        <div className="mx-auto max-w-7xl px-6 md:px-10">
+          <div className="grid gap-14 md:grid-cols-[1.05fr_1fr] md:gap-20 items-center">
+            <figure className="reveal-up relative overflow-hidden">
+              <img
+                src={artisanProfile.url}
+                alt="Antoine Velut, maître ébéniste, dans son atelier"
+                loading="lazy"
+                className="h-[520px] md:h-[680px] w-full object-cover"
+              />
+              <figcaption className="absolute bottom-5 left-5 bg-ink/70 px-4 py-2 text-[0.6rem] uppercase tracking-[0.3em] text-cream">
+                Antoine Velut · Atelier de Beaune
+              </figcaption>
+            </figure>
+            <div>
+              <p className="eyebrow">À propos</p>
+              <h2 className="reveal-up mt-5 text-4xl md:text-6xl leading-[1.05]">
+                Trois générations, <em className="italic text-bronze">une même main</em>.
+              </h2>
+              <p className="reveal-up mt-8 text-base md:text-lg leading-relaxed text-muted-foreground">
+                Antoine Velut a repris l'atelier familial en 2004, après quinze années passées
+                auprès des Compagnons du Devoir. Il perpétue un métier lent, silencieux,
+                exigeant — où la moindre entaille engage l'ensemble d'une pièce.
+              </p>
+              <p className="reveal-up mt-5 text-base md:text-lg leading-relaxed text-muted-foreground">
+                Ici, aucune machine numérique. Rien que le maillet, le ciseau, le rabot —
+                et l'œil patient qui décide quand le bois est enfin devenu meuble.
+              </p>
+              <div className="reveal-up mt-10 grid grid-cols-3 gap-6 border-t border-border pt-8 text-xs uppercase tracking-[0.25em] text-muted-foreground">
+                <div><div className="font-serif text-3xl normal-case tracking-normal text-ink">2004</div>Reprise</div>
+                <div><div className="font-serif text-3xl normal-case tracking-normal text-ink">15 ans</div>Compagnonnage</div>
+                <div><div className="font-serif text-3xl normal-case tracking-normal text-ink">Beaune</div>Bourgogne</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* MOBILIER + RESTAURATION services */}
       <section id="mobilier" className="py-28 md:py-40 bg-cream">
         <div className="mx-auto max-w-7xl px-6 md:px-10">
@@ -486,6 +545,27 @@ function Home() {
             </p>
           </div>
 
+          <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] gap-3 md:gap-4">
+            {processShots.map((p, i) => (
+              <figure
+                key={i}
+                className={`reveal-up group relative overflow-hidden bg-ink ${p.span}`}
+                style={{ transitionDelay: `${i * 60}ms` }}
+              >
+                <img
+                  src={p.src}
+                  alt={p.label}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover grayscale-[15%] transition-all duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110 group-hover:grayscale-0"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-90" />
+                <figcaption className="absolute inset-x-0 bottom-0 p-4 md:p-5 translate-y-2 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                  <p className="text-[0.55rem] uppercase tracking-[0.35em] text-bronze">{p.latin}</p>
+                  <p className="mt-1 font-serif text-lg md:text-xl text-cream">{p.label}</p>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -512,6 +592,17 @@ function Home() {
 
       {/* DEVIS CTA */}
       <section id="devis" className="relative overflow-hidden py-32 md:py-44 bg-cream">
+        {/* Soft-focus workshop background */}
+        <div aria-hidden className="absolute inset-0">
+          <img
+            src={storyJoinery.url}
+            alt=""
+            className="h-full w-full object-cover scale-105"
+            style={{ filter: "blur(14px) saturate(0.85)" }}
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-cream/85" />
+        </div>
         <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
           {Array.from({ length: 18 }).map((_, i) => {
             const left = (i * 53) % 100;

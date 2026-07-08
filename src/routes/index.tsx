@@ -109,11 +109,15 @@ function Nav({ scrolled }: { scrolled: boolean }) {
     <>
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-          scrolled || open ? "bg-cream/90 backdrop-blur-md border-b border-border" : "bg-transparent"
+          open
+            ? "bg-transparent"
+            : scrolled
+              ? "bg-cream/90 backdrop-blur-md border-b border-border"
+              : "bg-transparent"
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
-          <a href="#top" className={`font-serif text-xl tracking-wide ${scrolled || open ? "text-ink" : "text-cream"}`}>
+          <a href="#top" className={`font-serif text-xl tracking-wide ${open || scrolled ? "text-ink" : "text-cream"}`}>
             Ébénisterie <span className="italic">Velut</span>
           </a>
           <nav className={`hidden gap-10 text-xs uppercase tracking-[0.25em] md:flex ${scrolled ? "text-ink" : "text-cream"}`}>
@@ -130,7 +134,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
           </a>
           <button
             onClick={() => setOpen(!open)}
-            className={`md:hidden relative z-50 text-xs uppercase tracking-widest transition-colors ${scrolled || open ? "text-ink" : "text-cream"}`}
+            className={`md:hidden relative z-50 text-xs uppercase tracking-widest transition-colors ${open ? "text-cream" : scrolled ? "text-ink" : "text-cream"}`}
             aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={open}
           >

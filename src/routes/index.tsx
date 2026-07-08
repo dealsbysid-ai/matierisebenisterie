@@ -545,6 +545,27 @@ function Home() {
             </p>
           </div>
 
+          <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] gap-3 md:gap-4">
+            {processShots.map((p, i) => (
+              <figure
+                key={i}
+                className={`reveal-up group relative overflow-hidden bg-ink ${p.span}`}
+                style={{ transitionDelay: `${i * 60}ms` }}
+              >
+                <img
+                  src={p.src}
+                  alt={p.label}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover grayscale-[15%] transition-all duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110 group-hover:grayscale-0"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-90" />
+                <figcaption className="absolute inset-x-0 bottom-0 p-4 md:p-5 translate-y-2 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                  <p className="text-[0.55rem] uppercase tracking-[0.35em] text-bronze">{p.latin}</p>
+                  <p className="mt-1 font-serif text-lg md:text-xl text-cream">{p.label}</p>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
         </div>
       </section>
 

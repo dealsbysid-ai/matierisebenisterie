@@ -101,7 +101,7 @@ function DraggableMarquee({ items, speed = 40 }: { items: { src: string; label: 
 function useScrollReveal() {
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const targets = document.querySelectorAll<HTMLElement>(".reveal-up, .curtain");
+    const targets = document.querySelectorAll<HTMLElement>(".reveal-up, .curtain, .texture-wipe");
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -109,6 +109,7 @@ function useScrollReveal() {
           const el = e.target as HTMLElement;
           if (el.classList.contains("curtain")) el.classList.add("is-revealed");
           if (el.classList.contains("reveal-up")) el.classList.add("is-visible");
+          if (el.classList.contains("texture-wipe")) el.classList.add("is-visible");
           io.unobserve(el);
         });
       },
@@ -569,10 +570,11 @@ function Home() {
       </section>
 
       {/* NUMBERS */}
-      <section className="relative py-28 md:py-36">
-        <div className="absolute inset-0">
+      <section className="relative py-28 md:py-36 overflow-hidden">
+        <div className="absolute inset-0 texture-wipe">
           <img src={walnut} alt="" className="h-full w-full object-cover" loading="lazy" />
           <div className="absolute inset-0 bg-ink/75" />
+          <span aria-hidden className="texture-sheen" />
         </div>
         <div className="relative mx-auto max-w-6xl px-6 md:px-10 grid gap-12 md:grid-cols-4 text-cream">
           {[
@@ -580,8 +582,8 @@ function Home() {
             ["3", "Générations d'ébénistes"],
             ["+400", "Pièces restaurées"],
             ["12", "Essences travaillées"],
-          ].map(([n, l]) => (
-            <div key={l}>
+          ].map(([n, l], i) => (
+            <div key={l} className="reveal-up" style={{ transitionDelay: `${350 + i * 140}ms` }}>
               <div className="font-serif text-5xl md:text-6xl">{n}</div>
               <div className="mt-3 text-[0.65rem] uppercase tracking-[0.3em] text-cream/60">{l}</div>
             </div>

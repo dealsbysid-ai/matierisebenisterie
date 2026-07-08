@@ -93,45 +93,6 @@
   opacity: 1;
   transform: translateY(0);
 }
-
-/* Texture wipe: reveals background image from left to right on scroll */
-.texture-wipe {
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path 1.6s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: clip-path;
-}
-.texture-wipe.is-visible {
-  clip-path: inset(0 0 0 0);
-}
-.texture-sheen {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    100deg,
-    transparent 30%,
-    color-mix(in oklab, var(--bronze) 55%, transparent) 48%,
-    color-mix(in oklab, var(--cream) 70%, transparent) 50%,
-    color-mix(in oklab, var(--bronze) 55%, transparent) 52%,
-    transparent 70%
-  );
-  mix-blend-mode: screen;
-  opacity: 0;
-  transform: translateX(-100%);
-}
-.texture-wipe.is-visible .texture-sheen {
-  animation: texture-sheen-sweep 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
-}
-@keyframes texture-sheen-sweep {
-  0%   { opacity: 0; transform: translateX(-100%); }
-  20%  { opacity: 0.9; }
-  80%  { opacity: 0.9; }
-  100% { opacity: 0; transform: translateX(100%); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .texture-wipe { clip-path: none; transition: none; }
-  .texture-sheen { display: none; }
-}
 @media (prefers-reduced-motion: reduce) {
   .curtain::after { display: none; }
   .curtain > img { transform: none; }

@@ -106,38 +106,40 @@ function Nav({ scrolled }: { scrolled: boolean }) {
   ];
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled || open ? "bg-cream/90 backdrop-blur-md border-b border-border" : "bg-transparent"
-      }`}
-    >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
-        <a href="#top" className={`font-serif text-xl tracking-wide ${scrolled || open ? "text-ink" : "text-cream"}`}>
-          Ébénisterie <span className="italic">Velut</span>
-        </a>
-        <nav className={`hidden gap-10 text-xs uppercase tracking-[0.25em] md:flex ${scrolled ? "text-ink" : "text-cream"}`}>
-          <a href="#mobilier" className="hover:text-bronze transition">Mobilier</a>
-          <a href="#restauration" className="hover:text-bronze transition">Restauration</a>
-          <a href="#atelier" className="hover:text-bronze transition">L'Atelier</a>
-          <a href="#matieres" className="hover:text-bronze transition">Matières</a>
-        </nav>
-        <a
-          href="#devis"
-          className="hidden md:inline-block border border-bronze bg-bronze px-6 py-3 text-[0.65rem] uppercase tracking-[0.3em] text-cream hover:bg-transparent hover:text-bronze transition-colors"
-        >
-          Demander un Devis
-        </a>
-        <button
-          onClick={() => setOpen(!open)}
-          className={`md:hidden relative z-50 text-xs uppercase tracking-widest transition-colors ${scrolled || open ? "text-ink" : "text-cream"}`}
-          aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
-          aria-expanded={open}
-        >
-          {open ? "Fermer" : "Menu"}
-        </button>
-      </div>
+    <>
+      <header
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+          scrolled || open ? "bg-cream/90 backdrop-blur-md border-b border-border" : "bg-transparent"
+        }`}
+      >
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
+          <a href="#top" className={`font-serif text-xl tracking-wide ${scrolled || open ? "text-ink" : "text-cream"}`}>
+            Ébénisterie <span className="italic">Velut</span>
+          </a>
+          <nav className={`hidden gap-10 text-xs uppercase tracking-[0.25em] md:flex ${scrolled ? "text-ink" : "text-cream"}`}>
+            <a href="#mobilier" className="hover:text-bronze transition">Mobilier</a>
+            <a href="#restauration" className="hover:text-bronze transition">Restauration</a>
+            <a href="#atelier" className="hover:text-bronze transition">L'Atelier</a>
+            <a href="#matieres" className="hover:text-bronze transition">Matières</a>
+          </nav>
+          <a
+            href="#devis"
+            className="hidden md:inline-block border border-bronze bg-bronze px-6 py-3 text-[0.65rem] uppercase tracking-[0.3em] text-cream hover:bg-transparent hover:text-bronze transition-colors"
+          >
+            Demander un Devis
+          </a>
+          <button
+            onClick={() => setOpen(!open)}
+            className={`md:hidden relative z-50 text-xs uppercase tracking-widest transition-colors ${scrolled || open ? "text-ink" : "text-cream"}`}
+            aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+            aria-expanded={open}
+          >
+            {open ? "Fermer" : "Menu"}
+          </button>
+        </div>
+      </header>
 
-      {/* Premium mobile menu */}
+      {/* Premium mobile menu — rendered as sibling so it is not clipped by the header */}
       <div
         className={`fixed inset-0 z-40 flex flex-col bg-cream transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden ${
           open ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"
@@ -187,7 +189,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
           </p>
         </div>
       </div>
-    </header>
+    </>
   );
 }
 

@@ -486,59 +486,6 @@ function Home() {
             </p>
           </div>
 
-          <div className="columns-1 gap-4 sm:columns-2 lg:columns-3 xl:columns-4 [column-fill:_balance]">
-            {gallery.map((g, i) => (
-              <figure
-                key={i}
-                className={`curtain group relative mb-4 break-inside-avoid cursor-pointer overflow-hidden ${ratioClass[g.ratio] ?? "aspect-[3/4]"}`}
-                onClick={() => setLightboxIndex(i)}
-              >
-                <img
-                  src={g.src}
-                  alt={g.note}
-                  loading="lazy"
-                  className="absolute inset-0 h-full w-full object-cover transition-all duration-700 grayscale-[20%] contrast-95 group-hover:grayscale-0 group-hover:contrast-105 group-hover:scale-[1.03]"
-                />
-                <figcaption className="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-ink/95 via-ink/70 to-transparent p-5 text-cream transition-transform duration-500 group-hover:translate-y-0">
-                  <p className="text-[0.6rem] uppercase tracking-[0.35em] text-bronze">Note d'atelier</p>
-                  <p className="mt-1 font-serif text-lg">{g.note}</p>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-
-
-          <Dialog open={lightboxIndex !== null} onOpenChange={(open) => !open && setLightboxIndex(null)}>
-            <DialogContent className="max-w-[95vw] max-h-[95vh] w-full h-full p-0 border-none bg-black/95 flex items-center justify-center">
-              <DialogTitle className="sr-only">{activeImage?.note ?? "Image atelier"}</DialogTitle>
-              {activeImage && (
-                <div className="relative flex flex-col items-center w-full h-full justify-center p-4 md:p-8">
-                  <img
-                    src={activeImage.src}
-                    alt={activeImage.note}
-                    className="max-h-[85vh] max-w-full object-contain shadow-2xl"
-                  />
-                  <p className="mt-4 text-[0.65rem] uppercase tracking-[0.3em] text-cream/70">
-                    {activeImage.note}
-                  </p>
-                  <button
-                    onClick={() => setLightboxIndex((i) => ((i ?? 0) - 1 + gallery.length) % gallery.length)}
-                    className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 text-cream/60 hover:text-cream transition-colors p-2"
-                    aria-label="Image précédente"
-                  >
-                    <ChevronLeft className="h-8 w-8 md:h-12 md:w-12" />
-                  </button>
-                  <button
-                    onClick={() => setLightboxIndex((i) => ((i ?? 0) + 1) % gallery.length)}
-                    className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 text-cream/60 hover:text-cream transition-colors p-2"
-                    aria-label="Image suivante"
-                  >
-                    <ChevronRight className="h-8 w-8 md:h-12 md:w-12" />
-                  </button>
-                </div>
-              )}
-            </DialogContent>
-          </Dialog>
         </div>
       </section>
 

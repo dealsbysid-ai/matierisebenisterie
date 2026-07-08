@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 
 function NumbersSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const linesRef = useRef<HTMLDivElement>(null);
+  
 
   useEffect(() => {
     const section = sectionRef.current;

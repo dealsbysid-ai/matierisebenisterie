@@ -117,7 +117,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
-          <a href="#top" className={`font-serif text-xl tracking-wide ${open || scrolled ? "text-ink" : "text-cream"}`}>
+          <a href="#top" className={`font-serif text-xl tracking-wide ${open ? "text-cream" : scrolled ? "text-ink" : "text-cream"}`}>
             Ébénisterie <span className="italic">Velut</span>
           </a>
           <nav className={`hidden gap-10 text-xs uppercase tracking-[0.25em] md:flex ${scrolled ? "text-ink" : "text-cream"}`}>

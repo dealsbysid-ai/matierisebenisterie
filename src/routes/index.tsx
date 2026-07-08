@@ -164,19 +164,60 @@ const textures = [
 
 export const Route = createFileRoute("/")({ component: Home });
 
+import at01 from "@/assets/atelier/0e15b12b.jpg.asset.json";
+import at02 from "@/assets/atelier/0e5d21c5.jpg.asset.json";
+import at03 from "@/assets/atelier/1a069f60.jpg.asset.json";
+import at04 from "@/assets/atelier/3195b0d2.jpg.asset.json";
+import at05 from "@/assets/atelier/529235b2.jpg.asset.json";
+import at06 from "@/assets/atelier/55e96eeb.jpg.asset.json";
+import at07 from "@/assets/atelier/581d3633.jpg.asset.json";
+import at08 from "@/assets/atelier/6d598f71.jpg.asset.json";
+import at09 from "@/assets/atelier/89300f67.jpg.asset.json";
+import at10 from "@/assets/atelier/98e6269f.jpg.asset.json";
+import at11 from "@/assets/atelier/990fc6f1.jpg.asset.json";
+import at12 from "@/assets/atelier/9d92f1c8.jpg.asset.json";
+import at13 from "@/assets/atelier/af729c0c.jpg.asset.json";
+import at14 from "@/assets/atelier/b9906c53.jpg.asset.json";
+import at15 from "@/assets/atelier/bab85f16.jpg.asset.json";
+import at16 from "@/assets/atelier/c6427706.jpg.asset.json";
+import at17 from "@/assets/atelier/d732bccd.jpg.asset.json";
+import at18 from "@/assets/atelier/df4bc026.jpg.asset.json";
+import at19 from "@/assets/atelier/e1445138.jpg.asset.json";
+import at20 from "@/assets/atelier/e3670dcd.jpg.asset.json";
+import at21 from "@/assets/atelier/fe16956f.jpg.asset.json";
+
+// Aspect ratios chosen to crop each photo attractively inside the masonry column.
+// "tall" = 4/5, "portrait" = 3/4, "square" = 1/1, "wide" = 4/3
 const gallery = [
-  { src: chiselHammer.url,   note: "Ciseau & Maillet" },
-  { src: joinery.url,        note: "Assemblage Mi-Bois" },
-  { src: ornament.url,       note: "Ornement Sculpté" },
-  { src: patternCarve.url,   note: "Motif à la Gouge" },
-  { src: roseCarve.url,      note: "Rose en Bas-Relief" },
-  { src: maitreAtelier.url,  note: "Le Maître à l'Œuvre" },
-  { src: axeShavings.url,    note: "Copeaux Vivants" },
-  { src: maulHands.url,      note: "Main de l'Artisan" },
-  { src: chiselHammer.url,   note: "Savoir-Faire Traditionnel" },
-  { src: joinery.url,        note: "Précision d'Ébéniste" },
-  { src: ornament.url,       note: "Patrimoine Sculpté" },
+  { src: at01.url, note: "Ciseau à l'ouvrage",       ratio: "portrait" },
+  { src: at18.url, note: "Maillet & Gouge",          ratio: "tall"     },
+  { src: at11.url, note: "Assemblage mi-bois",       ratio: "square"   },
+  { src: at13.url, note: "Le maître à l'établi",     ratio: "portrait" },
+  { src: at04.url, note: "Ornement sculpté",         ratio: "tall"     },
+  { src: at05.url, note: "Rose en bas-relief",       ratio: "square"   },
+  { src: at14.url, note: "Motif à la gouge",         ratio: "portrait" },
+  { src: at07.url, note: "Copeaux vivants",          ratio: "wide"     },
+  { src: at21.url, note: "Table achevée, chêne",     ratio: "tall"     },
+  { src: at17.url, note: "Détail de moulure",        ratio: "square"   },
+  { src: at03.url, note: "Chaise cannée, finition",  ratio: "portrait" },
+  { src: at12.url, note: "Poignée bronzée",          ratio: "square"   },
+  { src: at06.url, note: "Placage marqueté",         ratio: "portrait" },
+  { src: at19.url, note: "Commode restaurée",        ratio: "tall"     },
+  { src: at15.url, note: "Panneau assemblé",         ratio: "wide"     },
+  { src: at09.url, note: "Cire d'abeille appliquée", ratio: "square"   },
+  { src: at08.url, note: "Vernis à la mèche",        ratio: "portrait" },
+  { src: at02.url, note: "Coffret marqueté",         ratio: "tall"     },
+  { src: at10.url, note: "Tenon & mortaise",         ratio: "square"   },
+  { src: at20.url, note: "Buffet — pièce finale",    ratio: "portrait" },
+  { src: at16.url, note: "Signature de l'atelier",   ratio: "wide"     },
 ];
+
+const ratioClass: Record<string, string> = {
+  tall:     "aspect-[4/5]",
+  portrait: "aspect-[3/4]",
+  square:   "aspect-square",
+  wide:     "aspect-[4/3]",
+};
 
 
 const woods = {
@@ -518,14 +559,14 @@ function Home() {
             {gallery.map((g, i) => (
               <figure
                 key={i}
-                className="curtain group relative mb-4 break-inside-avoid cursor-pointer"
+                className={`curtain group relative mb-4 break-inside-avoid cursor-pointer overflow-hidden ${ratioClass[g.ratio] ?? "aspect-[3/4]"}`}
                 onClick={() => setLightboxIndex(i)}
               >
                 <img
                   src={g.src}
                   alt={g.note}
                   loading="lazy"
-                  className="w-full transition-all duration-700 grayscale-[35%] contrast-95 group-hover:grayscale-0 group-hover:contrast-105 group-hover:scale-[1.02]"
+                  className="absolute inset-0 h-full w-full object-cover transition-all duration-700 grayscale-[20%] contrast-95 group-hover:grayscale-0 group-hover:contrast-105 group-hover:scale-[1.03]"
                 />
                 <figcaption className="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-ink/95 via-ink/70 to-transparent p-5 text-cream transition-transform duration-500 group-hover:translate-y-0">
                   <p className="text-[0.6rem] uppercase tracking-[0.35em] text-bronze">Note d'atelier</p>
@@ -534,6 +575,7 @@ function Home() {
               </figure>
             ))}
           </div>
+
 
           <Dialog open={lightboxIndex !== null} onOpenChange={(open) => !open && setLightboxIndex(null)}>
             <DialogContent className="max-w-[95vw] max-h-[95vh] w-full h-full p-0 border-none bg-black/95 flex items-center justify-center">

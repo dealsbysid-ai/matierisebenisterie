@@ -363,7 +363,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
           <a
             href="#devis"
             onClick={() => setOpen(false)}
-            className={`mt-12 inline-flex items-center gap-3 border border-bronze bg-bronze px-8 py-4 text-[0.65rem] uppercase tracking-[0.3em] text-cream hover:bg-transparent hover:text-bronze transition-all duration-500 ${
+            className={`mt-12 inline-flex items-center gap-3 border border-bronze bg-bronze px-8 py-4 text-[0.65rem] uppercase tracking-[0.3em] text-cream hover:bg-transparent hover:text-bronze active:bg-transparent active:text-bronze transition-all duration-500 ${
               open ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
             }`}
             style={{ transitionDelay: open ? "620ms" : "0ms" }}

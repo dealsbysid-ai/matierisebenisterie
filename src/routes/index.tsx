@@ -344,18 +344,18 @@ function Nav({ scrolled }: { scrolled: boolean }) {
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className={`group relative flex items-center justify-between border-b border-cream/10 py-6 text-cream transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                className={`group relative flex items-center justify-between border-b border-cream/10 py-6 text-cream transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] active:bg-cream/5 ${
                   open ? "translate-x-0 opacity-100" : "translate-x-8 opacity-0"
                 }`}
                 style={{ transitionDelay: open ? `${300 + i * 80}ms` : "0ms" }}
               >
-                <span className="font-serif text-4xl group-hover:text-bronze transition-colors duration-300">
+                <span className="font-serif text-4xl group-hover:text-bronze group-active:text-bronze transition-colors duration-300">
                   {item.label}
                 </span>
                 <span className="text-[0.65rem] uppercase tracking-[0.3em] text-bronze/60">
                   {item.num}
                 </span>
-                <span className="absolute bottom-0 left-0 h-[1px] w-0 bg-bronze transition-all duration-500 group-hover:w-full" />
+                <span className="absolute bottom-0 left-0 h-[1px] w-0 bg-bronze transition-all duration-500 group-hover:w-full group-active:w-full" />
               </a>
             ))}
           </nav>

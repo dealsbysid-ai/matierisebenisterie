@@ -954,6 +954,20 @@ function Home() {
 
 
 
+      {/* RÉALISATIONS — premium 3D wood coverflow */}
+      <Realisations3D items={[
+        { src: fw1.url,  title: "Pendule Rocaille",       sub: "Bronze doré · Restauration complète" },
+        { src: fw2.url,  title: "Cabinet Henri II",       sub: "Noyer sculpté · Marqueterie" },
+        { src: fw3.url,  title: "Escalier balustré",      sub: "Chêne massif · Reprise à l'ancienne" },
+        { src: fw4.url,  title: "Départ d'escalier",      sub: "Noyer patiné · Sur-mesure" },
+        { src: fw5.url,  title: "Porte à double vantail", sub: "Padouk · Ferronnerie forgée" },
+        { src: fw6.url,  title: "Salle à manger",         sub: "Table & buffets · Restauration" },
+        { src: fw7.url,  title: "Secrétaire scandinave",  sub: "Teck huilé · Restauration douce" },
+        { src: fw8.url,  title: "Coiffeuse Art Déco",     sub: "Loupe d'orme · Miroir triptyque" },
+        { src: fw9.url,  title: "Chaise Louis-Philippe",  sub: "Chêne · Réfection assise" },
+        { src: fw10.url, title: "Cheminée monumentale",   sub: "Marbre rouge · Boiseries sculptées" },
+      ]} />
+
       {/* NUMBERS */}
       <NumbersSection />
 

@@ -632,43 +632,6 @@ function Home() {
 
 
 
-      {/* PROCESS GALLERY — masonry */}
-      <section id="atelier" className="py-28 md:py-40 bg-cream">
-        <div className="mx-auto max-w-7xl px-6 md:px-10">
-          <div className="mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-            <div>
-              <p className="eyebrow">04 · L'Atelier</p>
-              <h2 className="reveal-up mt-4 text-4xl md:text-6xl max-w-xl">Le geste, capturé.</h2>
-            </div>
-            <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
-              Fragments d'un quotidien fait de copeaux, de lumière rasante et de patience.
-              Une chronique visuelle du savoir-faire.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] gap-3 md:gap-4">
-            {processShots.map((p, i) => (
-              <figure
-                key={i}
-                className={`reveal-up group relative overflow-hidden bg-ink ${p.span}`}
-                style={{ transitionDelay: `${i * 60}ms` }}
-              >
-                <img
-                  src={p.src}
-                  alt={p.label}
-                  loading="lazy"
-                  className="absolute inset-0 h-full w-full object-cover grayscale-[15%] transition-all duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110 group-hover:grayscale-0"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-90" />
-                <figcaption className="absolute inset-x-0 bottom-0 p-4 md:p-5 translate-y-2 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                  <p className="text-[0.55rem] uppercase tracking-[0.35em] text-bronze">{p.latin}</p>
-                  <p className="mt-1 font-serif text-lg md:text-xl text-cream">{p.label}</p>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* NUMBERS */}
       <NumbersSection />

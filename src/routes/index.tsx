@@ -491,6 +491,7 @@ function Home() {
                 style={{ scrollbarWidth: "none" }}
               >
                 {[
+                  { src: artisanProfile.url, cap: "Antoine Velut · Atelier de Beaune" },
                   { src: slide1.url, cap: "Ciseau & maillet · Le geste fondateur" },
                   { src: slide2.url, cap: "Assemblage à tenon · Précision millimétrique" },
                   { src: slide3.url, cap: "Herminette · Copeaux vifs" },

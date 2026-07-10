@@ -1,6 +1,306 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 
+type FinalWork = { src: string; title: string; sub: string };
+
+function Realisations3D({ items }: { items: FinalWork[] }) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+  const [tilt, setTilt] = useState(0); // -1..1 scroll parallax
+  const dragRef = useRef<{ x: number; startActive: number; active: boolean }>({
+    x: 0, startActive: 0, active: false,
+  });
+  const n = items.length;
+
+  // Scroll-driven tilt / entrance
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const centerDist = (rect.top + rect.height / 2 - vh / 2) / (vh / 2 + rect.height / 2);
+      setTilt(Math.max(-1, Math.min(1, centerDist)));
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  // Auto-advance (pauses on hover/drag)
+  const [paused, setPaused] = useState(false);
+  useEffect(() => {
+    if (paused) return;
+    const id = window.setInterval(() => setActive((a) => (a + 1) % n), 4200);
+    return () => window.clearInterval(id);
+  }, [paused, n]);
+
+  const go = (dir: 1 | -1) => setActive((a) => (a + dir + n) % n);
+
+  // Drag
+  const onPointerDown = (e: React.PointerEvent) => {
+    dragRef.current = { x: e.clientX, startActive: active, active: true };
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    setPaused(true);
+  };
+  const onPointerMove = (e: React.PointerEvent) => {
+    if (!dragRef.current.active) return;
+    const dx = e.clientX - dragRef.current.x;
+    const step = Math.round(-dx / 90);
+    const next = (dragRef.current.startActive + step + n * 10) % n;
+    if (next !== active) setActive(next);
+  };
+  const onPointerUp = (e: React.PointerEvent) => {
+    dragRef.current.active = false;
+    (e.currentTarget as HTMLElement).releasePointerCapture?.(e.pointerId);
+    setTimeout(() => setPaused(false), 1500);
+  };
+
+  return (
+    <section
+      ref={sectionRef}
+      id="realisations"
+      className="relative overflow-hidden py-28 md:py-40"
+      style={{
+        background:
+          "radial-gradient(ellipse at 50% 0%, oklch(0.28 0.05 45) 0%, oklch(0.14 0.02 40) 65%, oklch(0.10 0.015 40) 100%)",
+      }}
+    >
+      {/* Wood plank floor */}
+      <div
+        aria-hidden
+        className="absolute inset-x-0 bottom-0 h-[46%] pointer-events-none"
+        style={{
+          backgroundImage: `url(${walnut})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          transform: `perspective(900px) rotateX(62deg) translateY(${20 - tilt * 30}px)`,
+          transformOrigin: "top center",
+          filter: "brightness(0.55) saturate(1.1)",
+          boxShadow: "0 -30px 60px -20px rgba(0,0,0,0.6) inset",
+        }}
+      />
+      <div
+        aria-hidden
+        className="absolute inset-x-0 bottom-0 h-[46%] pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(to bottom, transparent 0%, color-mix(in oklab, oklch(0.10 0.015 40) 60%, transparent) 55%, oklch(0.10 0.015 40) 100%)",
+        }}
+      />
+
+      {/* Grain glow line */}
+      <div aria-hidden className="pointer-events-none absolute left-0 right-0 top-1/2 h-[1px]"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent, color-mix(in oklab, var(--bronze) 60%, transparent) 40%, color-mix(in oklab, var(--bronze) 90%, white 15%) 50%, color-mix(in oklab, var(--bronze) 60%, transparent) 60%, transparent)",
+          opacity: 0.35,
+        }}
+      />
+
+      <div className="relative mx-auto max-w-7xl px-6 md:px-10">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14 md:mb-20">
+          <div>
+            <p className="eyebrow">06 · Réalisations</p>
+            <h2 className="reveal-up mt-4 text-4xl md:text-6xl text-cream max-w-2xl leading-[1.05]">
+              Pièces livrées, <em className="italic text-bronze">gestes gravés</em>.
+            </h2>
+          </div>
+          <p className="max-w-md text-sm leading-relaxed text-cream/60">
+            Dix œuvres récentes, sorties de l'atelier ces trois dernières années —
+            chacune posée sur son établi de présentation.
+          </p>
+        </div>
+
+        {/* 3D Stage */}
+        <div
+          ref={stageRef}
+          className="relative select-none touch-pan-y"
+          style={{ perspective: "1600px", perspectiveOrigin: "50% 40%" }}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
+          onPointerCancel={onPointerUp}
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
+          <div
+            className="relative mx-auto"
+            style={{
+              height: "clamp(360px, 60vh, 620px)",
+              transformStyle: "preserve-3d",
+              transform: `rotateX(${tilt * -4}deg)`,
+              transition: "transform 400ms cubic-bezier(0.16,1,0.3,1)",
+            }}
+          >
+            {items.map((it, i) => {
+              let rel = i - active;
+              if (rel > n / 2) rel -= n;
+              if (rel < -n / 2) rel += n;
+              const abs = Math.abs(rel);
+              const visible = abs <= 3;
+              const x = rel * 190; // px offset per step
+              const rotY = rel * -26;
+              const z = -abs * 180;
+              const scale = abs === 0 ? 1 : Math.max(0.72, 1 - abs * 0.11);
+              const opacity = visible ? Math.max(0.15, 1 - abs * 0.28) : 0;
+              const zi = 100 - abs;
+              const isActive = rel === 0;
+              return (
+                <button
+                  type="button"
+                  key={i}
+                  onClick={() => setActive(i)}
+                  aria-label={`Voir ${it.title}`}
+                  className="absolute left-1/2 top-1/2 rounded-[3px] focus:outline-none"
+                  style={{
+                    width: "clamp(220px, 32vw, 380px)",
+                    height: "clamp(310px, 46vw, 540px)",
+                    marginLeft: "calc(-1 * clamp(220px, 32vw, 380px) / 2)",
+                    marginTop: "calc(-1 * clamp(310px, 46vw, 540px) / 2)",
+                    transform: `translate3d(${x}px, 0, ${z}px) rotateY(${rotY}deg) scale(${scale})`,
+                    opacity,
+                    zIndex: zi,
+                    transition:
+                      "transform 700ms cubic-bezier(0.16,1,0.3,1), opacity 500ms ease",
+                    pointerEvents: visible ? "auto" : "none",
+                    transformStyle: "preserve-3d",
+                    cursor: isActive ? "grab" : "pointer",
+                  }}
+                >
+                  {/* Wood frame */}
+                  <div
+                    className="relative h-full w-full"
+                    style={{
+                      padding: "14px 14px 46px 14px",
+                      backgroundImage: `url(${oak})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      borderRadius: 4,
+                      boxShadow: isActive
+                        ? "0 40px 80px -20px rgba(0,0,0,0.85), 0 0 0 1px rgba(0,0,0,0.4), inset 0 0 0 1px color-mix(in oklab, var(--bronze) 70%, transparent)"
+                        : "0 24px 50px -18px rgba(0,0,0,0.75), 0 0 0 1px rgba(0,0,0,0.35)",
+                      filter: isActive ? "none" : "brightness(0.85) saturate(0.9)",
+                    }}
+                  >
+                    <div className="relative h-full w-full overflow-hidden rounded-[2px]"
+                      style={{ boxShadow: "inset 0 0 0 1px rgba(0,0,0,0.6), inset 0 0 40px rgba(0,0,0,0.35)" }}
+                    >
+                      <img
+                        src={it.src}
+                        alt={it.title}
+                        loading="lazy"
+                        draggable={false}
+                        className="h-full w-full object-cover"
+                        style={{
+                          transform: isActive ? "scale(1.02)" : "scale(1)",
+                          transition: "transform 900ms cubic-bezier(0.16,1,0.3,1)",
+                        }}
+                      />
+                      {/* Vignette + bronze wash on non-active */}
+                      <div
+                        aria-hidden
+                        className="absolute inset-0 pointer-events-none"
+                        style={{
+                          background: isActive
+                            ? "linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 40%)"
+                            : "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.25) 60%, rgba(0,0,0,0.4) 100%)",
+                        }}
+                      />
+                    </div>
+                    {/* Brass plaque */}
+                    <div
+                      className="absolute bottom-2 left-1/2 -translate-x-1/2 px-4 py-1"
+                      style={{
+                        background:
+                          "linear-gradient(180deg, color-mix(in oklab, var(--bronze) 90%, white 15%), color-mix(in oklab, var(--bronze) 80%, black 15%))",
+                        borderRadius: 2,
+                        boxShadow: "0 1px 2px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.35)",
+                        minWidth: "60%",
+                      }}
+                    >
+                      <div className="text-center font-serif text-[0.75rem] md:text-sm text-ink whitespace-nowrap overflow-hidden text-ellipsis">
+                        {it.title}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Floor reflection */}
+                  <div
+                    aria-hidden
+                    className="absolute left-0 right-0 top-full"
+                    style={{
+                      height: "55%",
+                      transform: "scaleY(-1)",
+                      transformOrigin: "top",
+                      backgroundImage: `url(${it.src})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      opacity: 0.22,
+                      filter: "blur(2px)",
+                      maskImage: "linear-gradient(to bottom, rgba(0,0,0,0.7), transparent 75%)",
+                      WebkitMaskImage: "linear-gradient(to bottom, rgba(0,0,0,0.7), transparent 75%)",
+                      borderRadius: 4,
+                    }}
+                  />
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Controls */}
+          <div className="mt-8 md:mt-10 flex items-center justify-center gap-6">
+            <button
+              onClick={() => go(-1)}
+              className="group flex h-11 w-11 items-center justify-center rounded-full border border-cream/25 text-cream hover:border-bronze hover:text-bronze transition-colors"
+              aria-label="Précédent"
+            >
+              <span className="text-lg leading-none">←</span>
+            </button>
+            <div className="flex items-center gap-2">
+              {items.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActive(i)}
+                  aria-label={`Aller à ${i + 1}`}
+                  className="h-[2px] transition-all"
+                  style={{
+                    width: i === active ? 28 : 12,
+                    background: i === active ? "var(--bronze)" : "color-mix(in oklab, var(--cream) 30%, transparent)",
+                  }}
+                />
+              ))}
+            </div>
+            <button
+              onClick={() => go(1)}
+              className="group flex h-11 w-11 items-center justify-center rounded-full border border-cream/25 text-cream hover:border-bronze hover:text-bronze transition-colors"
+              aria-label="Suivant"
+            >
+              <span className="text-lg leading-none">→</span>
+            </button>
+          </div>
+
+          {/* Active caption */}
+          <div className="mt-6 text-center">
+            <p className="eyebrow text-bronze">{String(active + 1).padStart(2, "0")} / {String(n).padStart(2, "0")}</p>
+            <p className="mt-2 font-serif text-2xl md:text-3xl text-cream">{items[active].title}</p>
+            <p className="mt-1 text-xs uppercase tracking-[0.3em] text-cream/50">{items[active].sub}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function NumbersSection() {
   const sectionRef = useRef<HTMLElement>(null);
   
@@ -244,6 +544,18 @@ import slide3 from "@/assets/atelier-slide/69acfaf4.jpg.asset.json";
 import slide4 from "@/assets/atelier-slide/b3e1d372.jpg.asset.json";
 import slide5 from "@/assets/atelier-slide/9fa80fd6.jpg.asset.json";
 import slide6 from "@/assets/atelier-slide/2c1bec21.jpg.asset.json";
+
+// Réalisations — final work images (10 uploaded pieces)
+import fw1  from "@/assets/final-work/22bb281c.jpg.asset.json";
+import fw2  from "@/assets/final-work/a92b664f.jpg.asset.json";
+import fw3  from "@/assets/final-work/ab697690.jpg.asset.json";
+import fw4  from "@/assets/final-work/8f2f8266.jpg.asset.json";
+import fw5  from "@/assets/final-work/2cec5f1d.jpg.asset.json";
+import fw6  from "@/assets/final-work/07be0ecf.jpg.asset.json";
+import fw7  from "@/assets/final-work/8a7e484b.jpg.asset.json";
+import fw8  from "@/assets/final-work/dae7393c.jpg.asset.json";
+import fw9  from "@/assets/final-work/c45fbe6a.jpg.asset.json";
+import fw10 from "@/assets/final-work/c1e27364.jpg.asset.json";
 
 const processShots = [
   { src: storyMalletChisel.url, label: "Ciseau & maillet", latin: "Gestes fondateurs", span: "md:row-span-2" },
@@ -641,6 +953,20 @@ function Home() {
 
 
 
+
+      {/* RÉALISATIONS — premium 3D wood coverflow */}
+      <Realisations3D items={[
+        { src: fw1.url,  title: "Pendule Rocaille",       sub: "Bronze doré · Restauration complète" },
+        { src: fw2.url,  title: "Cabinet Henri II",       sub: "Noyer sculpté · Marqueterie" },
+        { src: fw3.url,  title: "Escalier balustré",      sub: "Chêne massif · Reprise à l'ancienne" },
+        { src: fw4.url,  title: "Départ d'escalier",      sub: "Noyer patiné · Sur-mesure" },
+        { src: fw5.url,  title: "Porte à double vantail", sub: "Padouk · Ferronnerie forgée" },
+        { src: fw6.url,  title: "Salle à manger",         sub: "Table & buffets · Restauration" },
+        { src: fw7.url,  title: "Secrétaire scandinave",  sub: "Teck huilé · Restauration douce" },
+        { src: fw8.url,  title: "Coiffeuse Art Déco",     sub: "Loupe d'orme · Miroir triptyque" },
+        { src: fw9.url,  title: "Chaise Louis-Philippe",  sub: "Chêne · Réfection assise" },
+        { src: fw10.url, title: "Cheminée monumentale",   sub: "Marbre rouge · Boiseries sculptées" },
+      ]} />
 
       {/* NUMBERS */}
       <NumbersSection />

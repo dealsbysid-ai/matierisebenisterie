@@ -863,7 +863,7 @@ function Home() {
       </section>
 
       {/* À PROPOS — artisan portrait, fade-in on scroll */}
-      <section id="apropos" className="bg-cream py-28 md:py-40">
+      <section id="atelier" className="bg-cream py-28 md:py-40">
         <div className="mx-auto max-w-7xl px-6 md:px-10">
           <div className="grid gap-14 md:grid-cols-[1.05fr_1fr] md:gap-20 items-center">
             <div className="reveal-up relative">

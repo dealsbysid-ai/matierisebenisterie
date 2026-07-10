@@ -687,7 +687,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
           <a href="#top" className={`font-serif text-xl tracking-wide ${open ? "text-cream" : scrolled ? "text-ink" : "text-cream"}`}>
-            Ébénisterie <span className="italic">Velut</span>
+            Matiéris <span className="italic">Ébénisterie</span>
           </a>
           <nav className={`hidden gap-10 text-xs uppercase tracking-[0.25em] md:flex ${scrolled ? "text-ink" : "text-cream"}`}>
             <a href="#mobilier" className="hover:text-bronze transition">Mobilier</a>
@@ -1086,8 +1086,8 @@ function Home() {
             de famille ou d'une bibliothèque intégrée de trente mètres. Écrivez-nous.
           </p>
           <div className="mt-12 flex flex-wrap justify-center gap-4">
-            <a href="mailto:atelier@velut.fr" className="border border-bronze bg-bronze px-10 py-4 text-xs uppercase tracking-[0.3em] text-cream hover:bg-transparent hover:text-bronze transition-colors">
-              atelier@velut.fr
+            <a href="mailto:xyz@gmail.com" className="border border-bronze bg-bronze px-10 py-4 text-xs uppercase tracking-[0.3em] text-cream hover:bg-transparent hover:text-bronze transition-colors">
+              xyz@gmail.com
             </a>
             <a href="tel:+33380000000" className="border border-ink px-10 py-4 text-xs uppercase tracking-[0.3em] text-ink hover:bg-ink hover:text-cream transition-colors">
               +33 (0)3 80 00 00 00
@@ -1102,7 +1102,7 @@ function Home() {
 
       <footer className="border-t border-border bg-cream py-10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 md:flex-row md:px-10">
-          <p className="font-serif text-lg">Ébénisterie <em>Velut</em></p>
+          <p className="font-serif text-lg">Matiéris <em>Ébénisterie</em></p>
           <p className="text-[0.65rem] uppercase tracking-[0.3em] text-muted-foreground">
             © {new Date().getFullYear()} — Savoir-Faire Français
           </p>

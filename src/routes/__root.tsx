@@ -57,10 +57,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Ébénisterie Velut — L'Art du Geste, l'Âme du Bois" },
+      { title: "Matiéris Ébénisterie — L'Art du Geste, l'Âme du Bois" },
       { name: "description", content: "Atelier français d'ébénisterie et de restauration sur-mesure. Mobilier d'exception, patrimoine et savoir-faire traditionnel pour belles demeures." },
-      { name: "author", content: "Ébénisterie Velut" },
-      { property: "og:title", content: "Ébénisterie Velut — Ébéniste d'art français" },
+      { name: "author", content: "Matiéris Ébénisterie" },
+      { property: "og:title", content: "Matiéris Ébénisterie — Ébéniste d'art français" },
       { property: "og:description", content: "Mobilier sur-mesure et restauration de patrimoine. Un savoir-faire d'exception au service des belles demeures." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

@@ -477,17 +477,39 @@ function Home() {
       <section id="apropos" className="bg-cream py-28 md:py-40">
         <div className="mx-auto max-w-7xl px-6 md:px-10">
           <div className="grid gap-14 md:grid-cols-[1.05fr_1fr] md:gap-20 items-center">
-            <figure className="reveal-up relative overflow-hidden">
-              <img
-                src={artisanProfile.url}
-                alt="Antoine Velut, maître ébéniste, dans son atelier"
-                loading="lazy"
-                className="h-[520px] md:h-[680px] w-full object-cover"
-              />
-              <figcaption className="absolute bottom-5 left-5 bg-ink/70 px-4 py-2 text-[0.6rem] uppercase tracking-[0.3em] text-cream">
-                Antoine Velut · Atelier de Beaune
-              </figcaption>
-            </figure>
+            <div className="reveal-up relative">
+              <div
+                className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth -mx-6 md:mx-0"
+                style={{ scrollbarWidth: "none" }}
+              >
+                {[
+                  { src: artisanProfile.url, cap: "Antoine Velut · Atelier de Beaune" },
+                  { src: storyMalletHands.url, cap: "Mains patinées · Trente ans de métier" },
+                  { src: storyCarvingDetail.url, cap: "Rosace sculptée · Motif à la main" },
+                  { src: storyMalletChisel.url, cap: "Ciseau & maillet · Gestes fondateurs" },
+                  { src: storyJoinery.url, cap: "Assemblage à tenon · Précision millimétrique" },
+                  { src: storyAxeShavings.url, cap: "Herminette · Copeaux vifs" },
+                ].map((s, i) => (
+                  <figure
+                    key={i}
+                    className="relative shrink-0 basis-full snap-center overflow-hidden px-6 md:px-0 md:pr-4"
+                  >
+                    <img
+                      src={s.src}
+                      alt={s.cap}
+                      loading={i === 0 ? "eager" : "lazy"}
+                      className="h-[520px] md:h-[680px] w-full object-cover"
+                    />
+                    <figcaption className="absolute bottom-5 left-11 md:left-5 bg-ink/70 px-4 py-2 text-[0.6rem] uppercase tracking-[0.3em] text-cream">
+                      {s.cap}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+              <p className="mt-4 text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground md:text-left text-center">
+                ← Faire glisser pour découvrir l'atelier →
+              </p>
+            </div>
             <div>
               <p className="eyebrow">À propos</p>
               <h2 className="reveal-up mt-5 text-4xl md:text-6xl leading-[1.05]">

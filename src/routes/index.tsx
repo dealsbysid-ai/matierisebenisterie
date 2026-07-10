@@ -1100,6 +1100,7 @@ function Home() {
           <p className="mt-10 text-xs uppercase tracking-[0.3em] text-muted-foreground">
             Atelier — 12 rue des Tanneurs, 21200 Beaune
           </p>
+          <SocialIcons />
         </div>
       </section>
 

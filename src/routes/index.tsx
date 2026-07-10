@@ -53,7 +53,7 @@ function SocialIcons() {
   ];
 
   return (
-    <div ref={wrapRef} className="mt-12 flex justify-center gap-3">
+    <div ref={wrapRef} className="mt-8 flex justify-start gap-3">
       {socials.map((s) => (
         <a
           key={s.label}
@@ -1042,7 +1042,7 @@ function Home() {
 
 
       {/* DEVIS CTA */}
-      <section id="devis" className="relative overflow-hidden py-32 md:py-44 bg-cream">
+      <section id="devis" className="relative overflow-hidden pt-32 md:pt-44 pb-16 md:pb-20 bg-cream">
         {/* Soft-focus workshop background */}
         <div aria-hidden className="absolute inset-0">
           <img

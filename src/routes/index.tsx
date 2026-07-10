@@ -491,12 +491,12 @@ function Home() {
                 style={{ scrollbarWidth: "none" }}
               >
                 {[
-                  { src: artisanProfile.url, cap: "Antoine Velut · Atelier de Beaune" },
-                  { src: storyMalletHands.url, cap: "Mains patinées · Trente ans de métier" },
-                  { src: storyCarvingDetail.url, cap: "Rosace sculptée · Motif à la main" },
-                  { src: storyMalletChisel.url, cap: "Ciseau & maillet · Gestes fondateurs" },
-                  { src: storyJoinery.url, cap: "Assemblage à tenon · Précision millimétrique" },
-                  { src: storyAxeShavings.url, cap: "Herminette · Copeaux vifs" },
+                  { src: slide1.url, cap: "Ciseau & maillet · Le geste fondateur" },
+                  { src: slide2.url, cap: "Assemblage à tenon · Précision millimétrique" },
+                  { src: slide3.url, cap: "Herminette · Copeaux vifs" },
+                  { src: slide4.url, cap: "Mains patinées · Trente ans de métier" },
+                  { src: slide5.url, cap: "Rosace sculptée · Motif à la main" },
+                  { src: slide6.url, cap: "Damier sculpté · Trace du tracé" },
                 ].map((s, i) => (
                   <figure
                     key={i}

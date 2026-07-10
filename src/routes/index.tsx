@@ -669,9 +669,9 @@ function Nav({ scrolled }: { scrolled: boolean }) {
 
   const menuItems = [
     { label: "Mobilier", href: "#mobilier", num: "01" },
-    { label: "Restauration", href: "#restauration", num: "02" },
-    { label: "L'Atelier", href: "#atelier", num: "03" },
-    { label: "Matières", href: "#matieres", num: "04" },
+    { label: "les matières", href: "#matieres", num: "02" },
+    { label: "échantillonnage", href: "#echantillonnage", num: "03" },
+    { label: "réalisations", href: "#realisations", num: "04" },
   ];
 
   return (
@@ -691,9 +691,9 @@ function Nav({ scrolled }: { scrolled: boolean }) {
           </a>
           <nav className={`hidden gap-10 text-xs uppercase tracking-[0.25em] md:flex ${scrolled ? "text-ink" : "text-cream"}`}>
             <a href="#mobilier" className="hover:text-bronze transition">Mobilier</a>
-            <a href="#restauration" className="hover:text-bronze transition">Restauration</a>
-            <a href="#atelier" className="hover:text-bronze transition">L'Atelier</a>
-            <a href="#matieres" className="hover:text-bronze transition">Matières</a>
+            <a href="#matieres" className="hover:text-bronze transition">les matières</a>
+            <a href="#echantillonnage" className="hover:text-bronze transition">échantillonnage</a>
+            <a href="#realisations" className="hover:text-bronze transition">réalisations</a>
           </nav>
           <a
             href="#devis"
@@ -1003,7 +1003,7 @@ function Home() {
       </section>
 
       {/* MATIÈRES — texture marquee */}
-      <section className="bg-ink py-24 md:py-32 overflow-hidden">
+      <section id="echantillonnage" className="bg-ink py-24 md:py-32 overflow-hidden">
         <div className="mx-auto max-w-7xl px-6 md:px-10 mb-14 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
             <p className="eyebrow">05 · Échantillonnage</p>

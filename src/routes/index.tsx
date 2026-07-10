@@ -34,18 +34,18 @@ function SocialIcons() {
     {
       href: "https://instagram.com",
       label: "Instagram",
-      icon: <Instagram size={26} strokeWidth={1.75} />,
+      icon: <Instagram size={14} strokeWidth={1.75} />,
     },
     {
       href: "https://linkedin.com",
       label: "LinkedIn",
-      icon: <Linkedin size={26} strokeWidth={1.75} />,
+      icon: <Linkedin size={14} strokeWidth={1.75} />,
     },
     {
       href: "https://x.com",
       label: "X",
       icon: (
-        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
           <path d="M18.244 2H21.5l-7.5 8.57L23 22h-6.79l-5.31-6.94L4.8 22H1.54l8.02-9.17L1 2h6.91l4.8 6.34L18.244 2Zm-1.19 18h1.87L7.04 4H5.06l12 16Z" />
         </svg>
       ),
@@ -53,7 +53,7 @@ function SocialIcons() {
   ];
 
   return (
-    <div ref={wrapRef} className="mt-14 flex justify-center gap-5">
+    <div ref={wrapRef} className="mt-12 flex justify-center gap-3">
       {socials.map((s) => (
         <a
           key={s.label}

@@ -1,5 +1,74 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { Instagram, Linkedin } from "lucide-react";
+
+function SocialIcons() {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const items = Array.from(el.querySelectorAll<HTMLAnchorElement>(".wood-icon"));
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const target = entry.target as HTMLAnchorElement;
+          const idx = items.indexOf(target);
+          const delay = Math.max(0, idx) * 140;
+          window.setTimeout(() => {
+            target.classList.remove("is-hit");
+            // force reflow to restart animation
+            void target.offsetWidth;
+            target.classList.add("is-hit");
+          }, delay);
+          io.unobserve(target);
+        });
+      },
+      { threshold: 0.6 }
+    );
+    items.forEach((i) => io.observe(i));
+    return () => io.disconnect();
+  }, []);
+
+  const socials = [
+    {
+      href: "https://instagram.com",
+      label: "Instagram",
+      icon: <Instagram size={26} strokeWidth={1.75} />,
+    },
+    {
+      href: "https://linkedin.com",
+      label: "LinkedIn",
+      icon: <Linkedin size={26} strokeWidth={1.75} />,
+    },
+    {
+      href: "https://x.com",
+      label: "X",
+      icon: (
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true">
+          <path d="M18.244 2H21.5l-7.5 8.57L23 22h-6.79l-5.31-6.94L4.8 22H1.54l8.02-9.17L1 2h6.91l4.8 6.34L18.244 2Zm-1.19 18h1.87L7.04 4H5.06l12 16Z" />
+        </svg>
+      ),
+    },
+  ];
+
+  return (
+    <div ref={wrapRef} className="mt-14 flex justify-center gap-5">
+      {socials.map((s) => (
+        <a
+          key={s.label}
+          href={s.href}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={s.label}
+          className="wood-icon"
+        >
+          {s.icon}
+        </a>
+      ))}
+    </div>
+  );
+}
 
 type FinalWork = { src: string; title: string; sub: string };
 
@@ -1031,6 +1100,7 @@ function Home() {
           <p className="mt-10 text-xs uppercase tracking-[0.3em] text-muted-foreground">
             Atelier — 12 rue des Tanneurs, 21200 Beaune
           </p>
+          <SocialIcons />
         </div>
       </section>
 

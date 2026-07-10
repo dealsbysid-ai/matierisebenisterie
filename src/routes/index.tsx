@@ -245,6 +245,18 @@ import slide4 from "@/assets/atelier-slide/b3e1d372.jpg.asset.json";
 import slide5 from "@/assets/atelier-slide/9fa80fd6.jpg.asset.json";
 import slide6 from "@/assets/atelier-slide/2c1bec21.jpg.asset.json";
 
+// Réalisations — final work images (10 uploaded pieces)
+import fw1  from "@/assets/final-work/22bb281c.jpg.asset.json";
+import fw2  from "@/assets/final-work/a92b664f.jpg.asset.json";
+import fw3  from "@/assets/final-work/ab697690.jpg.asset.json";
+import fw4  from "@/assets/final-work/8f2f8266.jpg.asset.json";
+import fw5  from "@/assets/final-work/2cec5f1d.jpg.asset.json";
+import fw6  from "@/assets/final-work/07be0ecf.jpg.asset.json";
+import fw7  from "@/assets/final-work/8a7e484b.jpg.asset.json";
+import fw8  from "@/assets/final-work/dae7393c.jpg.asset.json";
+import fw9  from "@/assets/final-work/c45fbe6a.jpg.asset.json";
+import fw10 from "@/assets/final-work/c1e27364.jpg.asset.json";
+
 const processShots = [
   { src: storyMalletChisel.url, label: "Ciseau & maillet", latin: "Gestes fondateurs", span: "md:row-span-2" },
   { src: storyCarvingDetail.url, label: "Rosace sculptée", latin: "Motif à la main", span: "" },

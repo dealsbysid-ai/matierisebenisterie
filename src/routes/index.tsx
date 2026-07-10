@@ -237,6 +237,14 @@ import storyJoinery from "@/assets/story/joinery.jpg.asset.json";
 import storyAxeShavings from "@/assets/story/axe-shavings.jpg.asset.json";
 import storyMalletHands from "@/assets/story/mallet-hands.jpg.asset.json";
 
+// Atelier slideshow — uploaded workshop photography
+import slide1 from "@/assets/atelier-slide/937528cc.jpg.asset.json";
+import slide2 from "@/assets/atelier-slide/880facfd.jpg.asset.json";
+import slide3 from "@/assets/atelier-slide/69acfaf4.jpg.asset.json";
+import slide4 from "@/assets/atelier-slide/b3e1d372.jpg.asset.json";
+import slide5 from "@/assets/atelier-slide/9fa80fd6.jpg.asset.json";
+import slide6 from "@/assets/atelier-slide/2c1bec21.jpg.asset.json";
+
 const processShots = [
   { src: storyMalletChisel.url, label: "Ciseau & maillet", latin: "Gestes fondateurs", span: "md:row-span-2" },
   { src: storyCarvingDetail.url, label: "Rosace sculptée", latin: "Motif à la main", span: "" },
@@ -483,12 +491,12 @@ function Home() {
                 style={{ scrollbarWidth: "none" }}
               >
                 {[
-                  { src: artisanProfile.url, cap: "Antoine Velut · Atelier de Beaune" },
-                  { src: storyMalletHands.url, cap: "Mains patinées · Trente ans de métier" },
-                  { src: storyCarvingDetail.url, cap: "Rosace sculptée · Motif à la main" },
-                  { src: storyMalletChisel.url, cap: "Ciseau & maillet · Gestes fondateurs" },
-                  { src: storyJoinery.url, cap: "Assemblage à tenon · Précision millimétrique" },
-                  { src: storyAxeShavings.url, cap: "Herminette · Copeaux vifs" },
+                  { src: slide1.url, cap: "Ciseau & maillet · Le geste fondateur" },
+                  { src: slide2.url, cap: "Assemblage à tenon · Précision millimétrique" },
+                  { src: slide3.url, cap: "Herminette · Copeaux vifs" },
+                  { src: slide4.url, cap: "Mains patinées · Trente ans de métier" },
+                  { src: slide5.url, cap: "Rosace sculptée · Motif à la main" },
+                  { src: slide6.url, cap: "Damier sculpté · Trace du tracé" },
                 ].map((s, i) => (
                   <figure
                     key={i}

@@ -714,17 +714,13 @@ function Nav({ scrolled }: { scrolled: boolean }) {
 
       {/* Premium mobile menu — rendered as sibling so it is not clipped by the header */}
       <div
-        className={`fixed inset-0 z-40 flex flex-col bg-ink md:hidden transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          open ? "translate-x-0" : "translate-x-full"
+        className={`fixed inset-0 z-40 flex flex-col bg-ink md:hidden transition-opacity duration-400 ${
+          open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         aria-hidden={!open}
       >
-        {/* Animated top bronze line */}
-        <div
-          className={`h-[2px] bg-bronze transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            open ? "w-full" : "w-0"
-          }`}
-        />
+        {/* Top bronze line */}
+        <div className="h-[2px] w-full bg-bronze" />
 
         <div className="flex-1 overflow-auto px-8 pt-28 pb-12">
           <nav className="flex flex-col">
@@ -733,10 +729,10 @@ function Nav({ scrolled }: { scrolled: boolean }) {
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className={`group relative flex items-center justify-between border-b border-cream/10 py-6 text-cream transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] active:bg-cream/5 ${
-                  open ? "translate-x-0 opacity-100" : "translate-x-8 opacity-0"
+                className={`group relative flex items-center justify-between border-b border-cream/10 py-6 text-cream transition-opacity duration-400 active:bg-cream/5 ${
+                  open ? "opacity-100" : "opacity-0"
                 }`}
-                style={{ transitionDelay: open ? `${300 + i * 80}ms` : "0ms" }}
+                style={{ transitionDelay: open ? `${i * 60}ms` : "0ms" }}
               >
                 <span className="font-serif text-4xl group-hover:text-bronze group-active:text-bronze transition-colors duration-300">
                   {item.label}
@@ -752,20 +748,20 @@ function Nav({ scrolled }: { scrolled: boolean }) {
           <a
             href="#devis"
             onClick={() => setOpen(false)}
-            className={`mt-12 inline-flex items-center gap-3 border border-bronze bg-bronze px-8 py-4 text-[0.65rem] uppercase tracking-[0.3em] text-cream hover:bg-transparent hover:text-bronze active:bg-transparent active:text-bronze transition-all duration-500 ${
-              open ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+            className={`mt-12 inline-flex items-center gap-3 border border-bronze bg-bronze px-8 py-4 text-[0.65rem] uppercase tracking-[0.3em] text-cream hover:bg-transparent hover:text-bronze active:bg-transparent active:text-bronze transition-opacity duration-400 ${
+              open ? "opacity-100" : "opacity-0"
             }`}
-            style={{ transitionDelay: open ? "620ms" : "0ms" }}
+            style={{ transitionDelay: open ? "240ms" : "0ms" }}
           >
             Demander un Devis
             <span aria-hidden>→</span>
           </a>
 
           <div
-            className={`mt-20 text-xs uppercase tracking-[0.25em] text-cream/50 transition-all duration-500 ${
-              open ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+            className={`mt-20 text-xs uppercase tracking-[0.25em] text-cream/50 transition-opacity duration-400 ${
+              open ? "opacity-100" : "opacity-0"
             }`}
-            style={{ transitionDelay: open ? "720ms" : "0ms" }}
+            style={{ transitionDelay: open ? "300ms" : "0ms" }}
           >
             <p>Atelier — 12 rue des Tanneurs, 21200 Beaune</p>
             <p className="mt-2">
@@ -775,10 +771,10 @@ function Nav({ scrolled }: { scrolled: boolean }) {
         </div>
 
         <div
-          className={`px-8 py-6 border-t border-cream/10 transition-all duration-500 ${
-            open ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+          className={`px-8 py-6 border-t border-cream/10 transition-opacity duration-400 ${
+            open ? "opacity-100" : "opacity-0"
           }`}
-          style={{ transitionDelay: open ? "820ms" : "0ms" }}
+          style={{ transitionDelay: open ? "360ms" : "0ms" }}
         >
           <p className="text-[0.6rem] uppercase tracking-[0.35em] text-cream/40">
             Maison fondée en 1978 · Bourgogne

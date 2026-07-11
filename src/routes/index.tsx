@@ -932,7 +932,7 @@ function Home() {
               muted
               loop
               playsInline
-              className="aspect-video h-auto w-full object-cover"
+              className="aspect-[9/16] h-auto w-full object-cover"
               poster={artisanProfile.url}
             >
               Votre navigateur ne supporte pas la lecture de vidéos.

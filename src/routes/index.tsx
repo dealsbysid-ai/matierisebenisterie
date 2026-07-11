@@ -922,6 +922,26 @@ function Home() {
         </div>
       </section>
 
+      {/* VIDEO — atelier process */}
+      <section className="bg-cream py-10 md:py-16">
+        <div className="mx-auto max-w-7xl px-6 md:px-10">
+          <div className="relative overflow-hidden rounded-sm bg-ink shadow-2xl">
+            <video
+              src={websiteVideo.url}
+              autoPlay
+              muted
+              loop
+              playsInline
+              controls
+              className="h-auto w-full"
+              poster={artisanProfile.url}
+            >
+              Votre navigateur ne supporte pas la lecture de vidéos.
+            </video>
+          </div>
+        </div>
+      </section>
+
       {/* MOBILIER + RESTAURATION services */}
       <section id="mobilier" className="py-28 md:py-40 bg-cream">
         <div className="mx-auto max-w-7xl px-6 md:px-10">

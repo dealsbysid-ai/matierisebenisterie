@@ -572,6 +572,7 @@ import hero from "@/assets/hero-hands.jpg";
 import oak from "@/assets/wood-oak.jpg";
 import walnut from "@/assets/wood-walnut.jpg";
 import statsWood from "@/assets/tex/wood-stats-bg.jpg.asset.json";
+import websiteVideo from "@/assets/websitevideo.webm.asset.json";
 import cherry from "@/assets/wood-cherry.jpg";
 
 // Real workshop photography (user-uploaded reference set)
@@ -917,6 +918,26 @@ function Home() {
                 <div><div className="font-serif text-3xl normal-case tracking-normal text-ink">Beaune</div>Bourgogne</div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* VIDEO — atelier process */}
+      <section className="bg-cream py-16 md:py-28">
+        <div className="mx-auto max-w-7xl px-6 md:px-10">
+          <div className="relative overflow-hidden rounded-sm bg-ink shadow-2xl">
+            <video
+              src={websiteVideo.url}
+              autoPlay
+              muted
+              loop
+              playsInline
+              controls
+              className="aspect-video h-auto w-full object-cover"
+              poster={artisanProfile.url}
+            >
+              Votre navigateur ne supporte pas la lecture de vidéos.
+            </video>
           </div>
         </div>
       </section>

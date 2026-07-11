@@ -923,7 +923,7 @@ function Home() {
       </section>
 
       {/* VIDEO — atelier process */}
-      <section className="bg-cream py-10 md:py-16">
+      <section className="bg-cream py-16 md:py-28">
         <div className="mx-auto max-w-7xl px-6 md:px-10">
           <div className="relative overflow-hidden rounded-sm bg-ink shadow-2xl">
             <video
@@ -933,7 +933,7 @@ function Home() {
               loop
               playsInline
               controls
-              className="h-auto w-full"
+              className="aspect-video h-auto w-full object-cover"
               poster={artisanProfile.url}
             >
               Votre navigateur ne supporte pas la lecture de vidéos.

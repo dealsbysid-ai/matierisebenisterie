@@ -924,15 +924,14 @@ function Home() {
 
       {/* VIDEO — atelier process */}
       <section className="bg-cream py-16 md:py-28">
-        <div className="mx-auto max-w-7xl px-6 md:px-10">
-          <div className="relative overflow-hidden rounded-sm bg-ink shadow-2xl">
+        <div className="mx-auto md:max-w-7xl md:px-10">
+          <div className="relative overflow-hidden bg-ink md:rounded-sm shadow-2xl">
             <video
               src={websiteVideo.url}
               autoPlay
               muted
               loop
               playsInline
-              controls
               className="aspect-video h-auto w-full object-cover"
               poster={artisanProfile.url}
             >

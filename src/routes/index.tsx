@@ -572,6 +572,7 @@ import hero from "@/assets/hero-hands.jpg";
 import oak from "@/assets/wood-oak.jpg";
 import walnut from "@/assets/wood-walnut.jpg";
 import statsWood from "@/assets/tex/wood-stats-bg.jpg.asset.json";
+import websiteVideo from "@/assets/websitevideo.webm.asset.json";
 import cherry from "@/assets/wood-cherry.jpg";
 
 // Real workshop photography (user-uploaded reference set)

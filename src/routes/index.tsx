@@ -923,7 +923,7 @@ function Home() {
       </section>
 
       {/* VIDEO — atelier process */}
-      <section className="bg-cream py-16 md:py-28">
+      <section className="bg-cream py-8 md:py-14">
         <div className="mx-auto md:max-w-7xl md:px-10">
           <div className="relative overflow-hidden bg-ink md:rounded-sm shadow-2xl">
             <video

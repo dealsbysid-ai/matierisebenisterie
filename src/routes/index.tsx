@@ -405,18 +405,17 @@ function NumbersSection() {
       className="relative py-28 md:py-36 overflow-hidden"
       style={{ backgroundColor: "oklch(0.32 0.06 45)" }}
     >
-      {/* Wood texture reveals left → right, tied to scroll. Its own grain lines
-          act as the moving lines. Fully revealed when section hits mid-viewport. */}
+      {/* Wood texture background: starts grayscale, becomes full color as user scrolls. */}
       <div
         aria-hidden
         className="absolute inset-0"
         style={{
-          clipPath: "inset(0 calc((1 - var(--line-p, 0)) * 100%) 0 0)",
-          willChange: "clip-path",
+          filter: "grayscale(calc(1 - var(--line-p, 0))) saturate(calc(0.4 + var(--line-p, 0) * 0.8))",
+          willChange: "filter",
         }}
       >
-        <img src={walnut} alt="" className="h-full w-full object-cover" loading="lazy" />
-        <div className="absolute inset-0 bg-ink/45" />
+        <img src={statsWood.url} alt="" className="h-full w-full object-cover" loading="lazy" />
+        <div className="absolute inset-0 bg-ink/55" />
       </div>
       {/* Bright edge that rides along with the reveal front */}
       <div
